@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  	<script src="CMS/Javascript/CMS_General.js" defer></script>
+	<script src="CMS/Javascript/CMS_Basic_Account.js" defer></script>
+	<link rel="stylesheet" href="CMS/Css/CMS_Main.css">
+
+	<title>Login Page</title>
+</head>
+<body>
+<div class="CMS_TabHead">
+	<div class="CMS_Tab">Login</div>
+	<div class="CMS_Tab">Create account</div>
+</div>
+<div class="CMS_TabContent">
+	<div class="Tab_Login CMS_TabData">
+		<h1 id="CMS_Log_title">Log in</h1>
+		<form id="loginForm" name="loginForm" method="POST" action="CMS_Login_catch.php?s=1" target="_SELF">
+		<div class="CMS_Log_Field">
+			<label for="Log_username">Username</label>
+			<input id="CMS_Log_username" name="Log_username" type="text" inputmode="text" autocomplete="username" required placeholder="Username..."/>
+		</div>
+		<div class="CMS_Log_Field">
+			<label for="Log_password">Password</label>
+			<input id="CMS_password1" name="Log_password" type="password" autocomplete="current-password" required minlength="8" maxlength="20" aria-invalid="false" placeholder="••••••••" />
+		</div>
+		<button type="submit" class="CMS_But">Log in</button>
+		<br>
+	</div>
+	<div id="Tab_Create" class="CMS_TabData">
+		<main class="CMS_Log_Layout" role="main" aria-labelledby="title">
+		<h1 id="CMS_Log_title">Create account</h1>
+		<p class="sub">Enter your details to continue.</p>
+		<p id="JsEna">Javascript seems disabled. This means that certain scripts are disabled.</p>
+		<form id="CreateForm" name="CreateForm" method="POST" action="CMS_Login_catch.php?s=2" target="_SELF">
+
+		<div class="CMS_Log_Field">
+			<label for="username">Username (letters only)</label>
+			<input id="CMS_username" name="username" type="text" inputmode="text" autocomplete="username" required placeholder="Username..."/>
+			<div id="CMS_username_Error" class="CMS_Error"></div>
+		</div>
+
+		<div class="CMS_Log_Field">
+			<label for="email">Email</label>
+			<input id="CMS_email" name="email" type="email" autocomplete="email" required aria-invalid="false" placeholder="name@example.com" />
+			<div id="CMS_email_Error" class="CMS_Error"></div>
+		</div>
+		<div class="CMS_Log_Field">
+			<label for="password1">password</label>
+			<input id="CMS_password1" name="password1" type="password" required minlength="8" maxlength="20" placeholder="••••••••" />
+			<div id="CMS_password1_Error" class="CMS_Error"></div>
+		</div>
+		<div class="CMS_Log_Field">
+			<label for="password2">Repeat password</label>
+			<input id="CMS_password2" name="password2" type="password" required minlength="8" maxlength="20" placeholder="••••••••" />
+			<div id="CMS_password2_Error" class="CMS_Error"></div>
+		</div>
+		<button class="CMS_Log_send CMS_But" type="submit" id="CMS_Log_But">Send</button>
+		</div>
+		
+		<div id="CMS_formMessage" class="form-message" aria-live="polite"></div>
+		<div class="CMS_Log_Lane">
+			<a href="#" class="CMS_Log_sub" disabled>Forgot password? [not implemented]</a></small>
+		</div>
+		<br>
+		</form>
+	</main>
+	</div>
+</div>
+</body>
+</html>
