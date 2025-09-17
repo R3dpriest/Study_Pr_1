@@ -102,7 +102,7 @@ CREATE TABLE CMS_Page_content (
 	Pages_id INT NOT NULL,					-- links to the main page // should have preselected language
 	Page_types_id INT NOT NULL,				-- Type of content
 	Content_id INT NOT NULL,				-- Links to spefic ID that is preselected 
-	sort INT NOT NULL,					-- The order at wich it must be loaded on the page.
+	sort INT NOT NULL						-- The order at wich it must be loaded on the page.
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 INSERT INTO CMS_Page_content (id, Pages_id, Content_id, sort) VALUES (0, 0, 0, 2, 0), (1, 1, 1, 1, 0), (1, 1, 2, 1, 1);
 
@@ -160,14 +160,17 @@ INSERT INTO CMS_content_raw (id, content, description) VALUES (0, 'Lorem ipsum d
 CREATE TABLE CMS_Selectfield {
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	form_id INT NULL,
-	descript VARCHAR (200) NOT NULL,
-	FOREIGN KEY (form_id) REFERENCES CMS_Forms(id) ON DELETE CASCADE,
+	descript VARCHAR(200) NOT NULL,
+	data_type ENUM('Data', 'Page') NOT NULL,
+	FOREIGN KEY (form_id) REFERENCES CMS_Forms(id) ON DELETE CASCADE
 } ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 INSERT INTO CMS_Selectfield 
 
 CREATE TABLE CMS SelectOption {
 	id INT AUTO_INCREMENT PRIMARY KEY,
-}
+	data_field VARCHAR (255) NOT NULL,
+	select_id VARCHAR(60) NOT NULL
+} ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 
