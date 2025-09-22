@@ -84,7 +84,7 @@ CREATE TABLE CMS_Pages (
 	page_name VARCHAR(100) NOT NULL,			-- "index"
 	page_ext VARCHAR(6) NOT NULL, 				-- ".PHP", ".HTML"
 	lang_id INT NOT NULL,					-- "1"
-	lang_Tx VARCHAR(3) NULL,				-- "1"
+	lang_Tx VARCHAR(3) NULL,				-- "EN"
 	read_id INT NULL DEFAULT 0,				-- what rights are needed to READUP
 	read_write_id INT NOT NULL,				-- what rights can write
 	page_head VARCHAR(160) NOT NULL,			-- Title of the page
@@ -117,14 +117,14 @@ CREATE TABLE CMS_Forms (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 INSERT INTO CMS_Forms (id, name, description, location) VALUES (0, 'Example', 'This is an example form.', './EN/Index.php'), (1, 'CMS_Form_form', 'Generate Form.', './EN/Index.php');
 /* forms - these generate fields */
- 
+
 CREATE TABLE CMS_Form_fields (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	form_id INT NOT NULL,						-- Link to CMS_Forms
-	field_key VARCHAR(100) NOT NULL,			-- For the name field_id
+	field_key VARCHAR(255) NOT NULL,			-- For the name field_id
 	field_type ENUM('text', 'textarea', 'select', 'email', 'checkbox', 'radio', 'button', 'number') NOT NULL, -- for the type field
 	field_anker VARCHAR(100) NULL,				-- for the ID field
-	field_description VARCHAR(100) NULL,		-- for internal Description
+	field_description VARCHAR(200) NULL,		-- for internal Description
 	field_required BOOLEAN DEFAULT FALSE,		-- says if field is required
 	sort_order INT DEFAULT 0,					-- Sorts the fields upon generation
 	FOREIGN KEY (form_id) REFERENCES CMS_Forms(id) ON DELETE CASCADE
@@ -139,7 +139,7 @@ CREATE TABLE CMS_Form_field_translation (
 	lang_id INT NOT NULL,								-- 1, 2, 3
 	lang_label VARCHAR(255) NOT NULL,					-- Label "Name", "Naam"
 	lang_placeholder VARCHAR(255) NULL,					-- Placeholder "Hover", "zweven"
-	lang_center VARCHAR(255) NULL,						-- Text inside fields like buttons
+	lang_center VARCHAR(60) NULL,						-- Text inside fields like buttons
 	FOREIGN KEY (field_id) REFERENCES CMS_form_fields(id) ON DELETE CASCADE,
 	FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE,
 	UNIQUE KEY unique_field_lang (field_id, lang_code)	-- makes sure translations are unique
@@ -156,7 +156,6 @@ CREATE TABLE CMS_content_raw (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 INSERT INTO CMS_content_raw (id, content, description) VALUES (0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Example text'), (1, '<h1>CMS - Form generator</h2><br>Please use the form bellow to create new forms.', 'CMS - Form - Header'), (2, 'Welcome at the foodbank.\n This is our newest foodbank page.', 'Index welcome page');
 
-
 CREATE TABLE CMS_Selectfield {
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	form_id INT NULL,
@@ -164,14 +163,15 @@ CREATE TABLE CMS_Selectfield {
 	data_type ENUM('Data', 'Page') NOT NULL,
 	FOREIGN KEY (form_id) REFERENCES CMS_Forms(id) ON DELETE CASCADE
 } ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-INSERT INTO CMS_Selectfield 
+INSERT INTO CMS_Selectfield (id, form_id, description, data_type) VALUES (0, 0, 'Example', 'Data');
 
-CREATE TABLE CMS SelectOption {
+CREATE TABLE CMS_SelectOption {
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	data_field VARCHAR (255) NOT NULL,
+	data_value VARCHAR(10) NOT NULL,
+	data_text VARCHAR(255) NOT NULL,
 	select_id VARCHAR(60) NOT NULL
 } ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+INSERT INTO CMS_SelectOption (id, data_field, select_id) VALUES (0, '1', 'Example 1', 'Na1'), (0, '1', 'Example 1', 'Na2'); 
 
 
 ----------- SUB - MENU -----------

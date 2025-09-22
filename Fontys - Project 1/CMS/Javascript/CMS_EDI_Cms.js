@@ -1,12 +1,14 @@
+let BufferVal1 = "": //
 $(document).ready(function() {
 	//Update all fields for forms
-	$('#CMS_EDI_ES1').on('click', function() {
+	$('#CMS_EDI_ES1').on('click', function(){
+		var CMS_YF = "1";
 		var CMS_EDI_E1 = $('#CMS_EDI_E1').html();
 		var CMS_EDI_E2 = $('#CMS_EDI_E2').val();
 		var CMS_EDI_E3 = $('#CMS_EDI_E3').val();
 		var CMS_EDI_E4 = $('#CMS_EDI_E4').val();
 		$.ajax({url: 'CMS_EDI_Catch.php', type: 'POST', 
-			data: { CMS_EDI_E1: CMS_EDI_E1, CMS_EDI_E2: CMS_EDI_E2, CMS_EDI_E3: CMS_EDI_E3, CMS_EDI_E4: CMS_EDI_E4 },
+			data: { CMS_YF: CMS_YF, CMS_EDI_E1: CMS_EDI_E1, CMS_EDI_E2: CMS_EDI_E2, CMS_EDI_E3: CMS_EDI_E3, CMS_EDI_E4: CMS_EDI_E4 },
 			success: function(response) {
 			console.log('Server response:', response);
 			},
@@ -16,9 +18,8 @@ $(document).ready(function() {
 		});
 	});
 	//Grab the select Form to update
-	$('#CMS_GrabAllForms').on('change', function() {
+	$('#CMS_Form_field_1').on('change', function() {
 		$('#CMS_EDI_Sub').empty();
-		var CMS_Sel_Fo1 = $(this).val();
 		if (CMS_Sel_Fo1) {
 		$.ajax({ url: 'CMS_EDI_Catch.php', type: 'POST', data: { CMS_Sel_Fo1: CMS_Sel_Fo1 },
 			success: function(response){
@@ -36,11 +37,32 @@ $(document).ready(function() {
 			});
 		}
 	});
-	$('#CMS_GrabAllForm_Fields').on('change', function() {
+	//Update all fields for forms
+	$('#CMS_EDI_ES1').on('click', function(){
+		var CMS_YF = "2";
+		var CMS_EDI_E1 = $('#CMS_EDI_E1').html();
+		var CMS_EDI_E2 = $('#CMS_EDI_E2').val();
+		var CMS_EDI_E3 = $('#CMS_EDI_E3').val();
+		var CMS_EDI_E4 = $('#CMS_EDI_E4').val();
+		var CMS_EDI_E5 = $('#CMS_EDI_E5').val();
+		var CMS_EDI_E6 = $('#CMS_EDI_E6').val();
+		var CMS_EDI_E7 = $('#CMS_EDI_E7').val();
+		var CMS_EDI_E8 = $('#CMS_EDI_E8').val();
+		$.ajax({url: 'CMS_EDI_Catch.php', type: 'POST', 
+			data: { CMS_YF: CMS_YF, CMS_EDI_E1: CMS_EDI_E1, CMS_EDI_E2: CMS_EDI_E2, CMS_EDI_E3: CMS_EDI_E3, CMS_EDI_E4: CMS_EDI_E4, CMS_EDI_E5: CMS_EDI_E5, CMS_EDI_E6: CMS_EDI_E6, CMS_EDI_E7: CMS_EDI_E7, CMS_EDI_E8: CMS_EDI_E8 },
+			success: function(response) {
+			console.log('Server response:', response);
+			},
+			error: function(xhr, status, error) {
+			console.error('Update error: ', error);
+			}
+		});
+	});
+	$('#CMS_Field_Lang_1').on('change', function(){
 		$('#CMS_EDI_Sub').empty();
-		var CMS_Sel_Fo = $(this).val();
-		if (CMS_Sel_Fo) {
-		$.ajax({ url: 'CMS_EDI_Catch.php', type: 'POST', data: { CMS_Sel_Fo: CMS_Sel_Fo },
+		var CMS_Sel_Fo2 = $(this).val();
+		if (CMS_Sel_Fo2) {
+		$.ajax({ url: 'CMS_EDI_Catch.php', type: 'POST', data: { CMS_Sel_Fo2: CMS_Sel_Fo2 },
 			success: function(response){
 				var output = response.split("»");
 					$('#CMS_EDI_E1').html(output[0]);
@@ -81,11 +103,37 @@ $(document).ready(function() {
 					}
 					$('#CMS_EDI_E8').html(output[7]);
 					$('#CMS_EDI_Sub').html(output[8]);
+					BufferVal1 = "["+output[0]+"] "+output[5];
+					$('#CMS_Field_Lang_5').val(output[5]);
+					$('#CMS_EDI_Ank').html(BufferVal1);
+					
 				},
 				error: function(xhr, status, error) {
 					console.error('Update error: ', error);
 				}
 			});
 		}
+	});
+	//Update all fields for forms
+	$('#CMS_EDI_ES3').on('click', function(){
+		var CMS_YF = "3";
+		var CMS_EDI_E1 = $('#CMS_EDI_E1').html();
+		var CMS_EDI_E2 = $('#CMS_EDI_E2').val();
+		var CMS_EDI_E3 = $('#CMS_EDI_E3').val();
+		var CMS_EDI_E4 = $('#CMS_EDI_E4').val();
+		var CMS_EDI_E5 = $('#CMS_EDI_E5').val();
+		var CMS_EDI_E6 = $('#CMS_EDI_E6').val();
+		var CMS_EDI_E7 = $('#CMS_EDI_E7').val();
+		var CMS_EDI_E8 = $('#CMS_EDI_E8').val();
+		var CMS_EDI_E9 = $('#CMS_EDI_E9').val();
+		$.ajax({url: 'CMS_EDI_Catch.php', type: 'POST', 
+			data: { CMS_YF: CMS_YF, CMS_EDI_E1: CMS_EDI_E1, CMS_EDI_E2: CMS_EDI_E2, CMS_EDI_E3: CMS_EDI_E3, CMS_EDI_E4: CMS_EDI_E4, CMS_EDI_E5: CMS_EDI_E5, CMS_EDI_E6: CMS_EDI_E6, CMS_EDI_E7: CMS_EDI_E7, CMS_EDI_E8: CMS_EDI_E8, CMS_EDI_E9: CMS_EDI_E9},
+			success: function(response) {
+			console.log('Server response:', response);
+			},
+			error: function(xhr, status, error) {
+			console.error('Update error: ', error);
+			}
+		});
 	});
 });
