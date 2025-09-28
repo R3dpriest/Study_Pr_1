@@ -85,7 +85,7 @@ select{ font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: bold; 
 select:hover {background: linear-gradient(to bottom, var(--Co4), var(--Co3)); box-shadow: 0 3px var(--Co5); color: var(--Co1);}
 option{background-color: var(--Co3); color: var(--Co2);}
 /* Buttons */
-.CMS_But{width: 95%; height: 95%; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: bold; color: var(--Co2); background: linear-gradient(to bottom, var(--Co3), var(--Co4)); border: none; border-radius: 8px; box-shadow: 0 5px var(--Sh1); cursor: pointer; position: relative; transition: box-shadow 0.2s ease, background-color 2s ease; border: 1px solid var(--Co1);}
+.CMS_But{width: 100%; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: bold; color: var(--Co2); background: linear-gradient(to bottom, var(--Co3), var(--Co4)); border: none; border-radius: 8px; box-shadow: 0 5px var(--Sh1); cursor: pointer; position: relative; transition: box-shadow 0.2s ease, background-color 2s ease; border: 1px solid var(--Co1); margin-top: 3px; padding: 2px;}
 .CMS_But:hover{ background: linear-gradient(to bottom, var(--Co4), var(--Co3)); box-shadow: 0 3px var(--Co5); color: var(--Co1);}
 .CMS_But:active{box-shadow: 0 4px #bde4bf82; transform: translateY(3px); }
 .CMS_But:disabled::after{content: " (disabled)"; font-style: italic;}
@@ -121,7 +121,19 @@ option{background-color: var(--Co3); color: var(--Co2);}
 
 /* font related */
 .CMS_Error{color: var(--Er1);}
+h2{margin-top: 3px; margin-bottom: 3px;}
 
 /* General Commands */
 .CMS_DisNon{display: none;}
+.CMS_DisIbl{display: inline-block;}
+.CMS_DisFlex{display: flex;}
+.CMS_DisBox{flex: 1;}
+.CMS_FlNstr{flex-grow: 0;}
 
+
+
+/* WMS */
+
+.WMS_Tile_container{ padding: 4px;}
+.WMS_Tile_Content{margin: 2px; padding: 4px; border: 2px solid var(--Co1); background-color: var(--Co5); border-radius: 3px;}
+.WMS_Ing_list thead tr th{writing-mode: vertical-lr; transform: rotate(180deg); text-align: center; vertical-align: middle; padding: 3px 10px;}
