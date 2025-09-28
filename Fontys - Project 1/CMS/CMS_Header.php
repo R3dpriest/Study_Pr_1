@@ -35,7 +35,7 @@ $CMS_Rights5 = $CMS_Rights4->fetch(PDO::FETCH_ASSOC);
 if($CMS_Rights5['read_write_id'], $_SESSION['CMS_3']){$CMS_Write = 1; include_once __dir__ . "/CMS/Function_lib/CMS_Head.html"; } else { $CMS_Write = 0 }
 if(in_array($CMS_Rights5['read_id'], $_SESSION['CMS_3']) || $CMS_Rights5['read_write_id'], $_SESSION['CMS_3']) || $CMS_Rights5['read__id'] === 0){
  ?>
-<html lang="en">
+<html>
 <head>
 	<?PHP include_once __dir__ . "/CMS/CMS_Head.html";?>
 	<title><?PHP echo CMS_Rights5['page_head']; ?></title>
@@ -49,6 +49,8 @@ include_once __dir__ . "/CMS_Generate_Sub_items.php";
 if(isset($CMS_Rights5['page_load_options'])){
 	switch ($CMS_Rights5['page_load_options']){
 		case "read":
+		break;
+		case "lock":
 		break;
 		case "write":
 			$_SESSION['Wr_Next'] = 1;

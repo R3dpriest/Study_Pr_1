@@ -75,4 +75,15 @@ function CMS_Rights_Labels(Inp7){
 		$GxQ .= "<option placeholder='" . echo $I7a['description'] . "' value='". echo $I7a['id'] ."'>". echo $I7a['title'] . "</option>";
 	}
 	$GxQ .= "</select>";
-}	
+}
+function WMS_GrabAllLocations(Inp8){
+	$Gxe = "<select id='".$Inp8."' form='".$Inp8."'>";
+	$CMS_Content8a = "SELECT * FROM WMS_Locations WHERE loc_enabled = true";
+	$CMS_Content8b = $SQL_Con->prepare($CMS_Content8a);
+	$CMS_Content8b->execute();
+	$CMS_Content8c = $CMS_Content8b->fetchAll(PDO::FETCH_ASSOC);
+	foreach($CMS_Content8c as $I8a){
+		$Gxe .= "<option placeholder='" . echo $I8a['loc_city'] . " - ".$I8a['loc_street']."' value='". echo $I8a['id'] ."'>". echo $I8a['loc_name'] . "</option>";
+	}
+	$Gxe .= "</select>";
+}
