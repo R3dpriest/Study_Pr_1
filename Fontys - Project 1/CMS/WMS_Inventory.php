@@ -10,6 +10,7 @@ GrabAllLocations("WMS_Location");
 		<div class="WMS_Tile_Content CMS_DisBox">
 			<h2>General information<h2>
 			<table class="WMS_Ing_list">
+			</table>
 		</div>
 	</div>
 	<div class="WMS_Tile_Content">
@@ -21,10 +22,11 @@ GrabAllLocations("WMS_Location");
 	</div>
 	<div class="CMS_DisFlex">
 		<div class="WMS_Tile_Content CMS_DisBox CMS_FlNstr">
-		<select><option>Donations</option><option>Processed</option><option>Transferred</option></select>
+		<select id="WMS_INV_OPT_SEL"><option value="0">Donations</option><option value="1">Processed</option><option value="2">Transferred</option></select>
 		<button class="CMS_But">Audit</button>
 		</div>
 		<div class="WMS_Tile_Content CMS_DisBox">
+			<h2 id="WMS_INV_h2"><h2>
 			<table class="WMS_Ing_list">
 				
 			</table>

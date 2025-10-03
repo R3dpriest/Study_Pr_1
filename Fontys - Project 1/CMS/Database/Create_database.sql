@@ -264,6 +264,7 @@ INSERT INTO WMS_Food_translations (id, f_product_id, lang_id, name) VALUES (0, 0
 CREATE TABLE WMS_Don_CMR {
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	donor_id INT NULL,
+	loc_id INT NOT NULL,
 	processed BOOLEAN DEFAULT FALSE,
 	pledge_d DATETIME  NOT NULL, -- date of pledge
 	expected_d DATETIME  NULL, -- date its expected
@@ -272,6 +273,7 @@ CREATE TABLE WMS_Don_CMR {
 CREATE TABLE WMS_Donations { 
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	ingredient_id INT NOT NULL,
+	loc_id INT NOT NULL,
 	volume INT NOT NULL,
 	donor_id INT NULL,
 	donor_cmr_id INT NOT NULL,
@@ -279,10 +281,35 @@ CREATE TABLE WMS_Donations {
 	expected_d DATETIME  NULL, -- date its expected
 	delivery BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY (donor_id) REFERENCES Prof_profles(id) ON DELETE CASCADE,
-	FOREIGN KEY (donor_cmr_id) REFERENCES WMS_Donations(id) ON DELETE CASCADE
+	FOREIGN KEY (donor_cmr_id) REFERENCES WMS_Donations(id) ON DELETE CASCADE,
+	FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE
 } ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-INSERT INTO WMS_Donations (id, ingredient_id, volume, donor_id, donor_cmr_id, pledge_d, expected_d, delivery) VALUES (0, 1, 0, 7, 0, NOW(), 2025-12-27 10:30:00, false), (0, 1, 4, 1, 0, NOW(), 2025-12-27 10:30:00, false);
+INSERT INTO WMS_Donations (id, ingredient_id, loc_id INT NOT NULL, volume, donor_id, donor_cmr_id, pledge_d, expected_d, delivery) VALUES (0, 1, 0, 0, 7, 0, NOW(), 2025-12-27 10:30:00, false), (1, 1, 1, 4, 1, 0, NOW(), 2025-12-27 10:30:00, false), (2, 1, 0, 0, 7, 0, NOW(), 2025-12-27 10:30:00, true), (3, 0, 1, 4, 1, 0, NOW(), 2025-12-27 10:30:00, true);
 
+CREATE TABLE WMS_Transfer {
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	ingredient_id INT NOT NULL,
+	loc_sending_id INT NOT NULL,
+	loc_recieving_id INT NOT NULL,
+	volume INT NOT NULL,
+	delivery BOOLEAN DEFAULT FALSE,
+	dilivery_date DATETIME NOT NULL,
+	FOREIGN KEY (ingredient_id) REFERENCES WMS_Food_products(id) ON DELETE CASCADE,
+	FOREIGN KEY (loc_sending_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE,
+	FOREIGN KEY (loc_recieving_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE
+} ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO WMS_Transfer (id, ingredient_id, loc_sending_id, loc_recieving_id, volume, delivery, dilivery_date) VALUES (0, 1, 0, 1, 22, true, 2025-12-27 10:36:00);
+
+CREATE TABLE WMS_Process {
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	ingredient_id INT NOT NULL,
+	loc_id INT NOT NULL,
+	volume INT NOT NULL,
+	process_date DATETIME NOT NULL,
+	FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE,
+	FOREIGN KEY (ingredient_id) REFERENCES WMS_Food_products(id) ON DELETE CASCADE
+} ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO WMS_Process (id, ingredient_id, loc_id, volume, process_date) VALUES (0, 1, 1, 7, NOW());
 
 CREATE TABLE WMS_Stock {
 	id INT  NOT NULL,
@@ -294,6 +321,7 @@ CREATE TABLE WMS_Stock {
 	FOREIGN KEY (ingredient_id) REFERENCES WMS_Food_products(id) ON DELETE CASCADE,
 	FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE
 } ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 
 
