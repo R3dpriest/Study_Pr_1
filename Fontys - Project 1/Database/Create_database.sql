@@ -45,7 +45,7 @@ INSERT INTO Prof_Users (id, username, email, hashed_password, right_names_id, en
 (0, 'Global Admin', 'example@example.exe', 'HASH', 1, true),
 (1, 'Generic User', 'example@example.org', 'HASH', 2, true),
 (2, 'ClientUser1', 'example@example.de', 'HASH', 2, true),
-(3, 'ClientUser2', 'example@example.de', 'HASH', 2, true);
+(3, 'ClientUser2', 'example@example.nl', 'HASH', 2, true);
 
 -- Prof_profiles
 CREATE TABLE Prof_profiles (
@@ -443,3 +443,4 @@ CREATE TABLE WMS_Stock (
 
 -- Herstel SQL-mode
 SET @@SESSION.sql_mode = @old_sql_mode;
+
