@@ -1,1 +1,0 @@
-<?PHP include_once __dir__ . "CMS_Footer.php"; ?>
