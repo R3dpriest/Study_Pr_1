@@ -50,6 +50,8 @@ if(isset($CMS_Rights5['page_load_options'])){
 	switch ($CMS_Rights5['page_load_options']){
 		case "read":
 		break;
+		case "lock":
+		break;
 		case "write":
 			$_SESSION['Wr_Next'] = 1;
 			$_SESSION['Pre_Page_Id'] = $CMS_Rights5['id'];
