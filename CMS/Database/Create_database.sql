@@ -122,14 +122,19 @@ CREATE TABLE CMS_Pages (
     page_head VARCHAR(160) NOT NULL,
     page_load_options ENUM('process', 'write', 'read', 'lock') NOT NULL DEFAULT 'process',
     created_on DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (read_id) REFERENCES Prof_Rights(id) ON DELETE CASCADE,
+	FOREIGN KEY (read_write_id) REFERENCES Prof_Rights(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE,
     UNIQUE KEY unique_cms_page (lang_id, page_name, page_ext)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO CMS_Pages (id, page_name, page_ext, lang_id, lang_Tx, read_id, read_write_id, page_head, page_load_options) VALUES
 (0, 'Index', '.php', 0, 'EN', 0, 2, 'Welcome', 'process'),
-(1, 'CMS_Forms_page', '.php', 0, 'EN', 1, 2, 'CMS - Form creator', 'write'),
-(2, 'WMS_Inventory', '.php', 0, 'EN', 1, 2, 'WMS - Inventory', 'lock');
+(1, 'CMS_EDI_For', '.php?Pa=1', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(2, 'WMS_Inventory', '.php', 0, 'EN', 4, 5, 'WMS - Inventory', 'lock'),
+(3, 'CMS_EDI_For', '.php?Pa=2', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(4, 'CMS_EDI_For', '.php?Pa=3', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(5, 'CMS_Login', '.php', 0, 'EN', 0, 2, 'Login Page', 'lock');
 
 -- CMS_Page_content
 CREATE TABLE CMS_Page_content (
@@ -226,10 +231,17 @@ INSERT INTO CMS_Translations_Other (id, lang_id, handle_tag, page_id, text) VALU
 (2, 0, 'WMS_inv_sta_3', 2, 'Vegetarians'),
 (3, 0, 'WMS_inv_sto_1', 2, 'Stockpile (current)'),
 (4, 0, 'WMS_inv_sto_2', 2, 'Stockpile (previous)'),
-(5, 0, 'WMS_inv_sto_3', 5, 'Last shipment'),
-(6, 0, 'WMS_inv_sto_4', 5, 'shelf-life'),
-(7, 0, 'WMS_inv_sto_5', 5, 'Options'),
-(8, 0, 'WMS_inv_sto_6', 5, '📦 Transfer');
+(5, 0, 'WMS_inv_sto_3', 2, 'Last shipment'),
+(6, 0, 'WMS_inv_sto_4', 2, 'shelf-life'),
+(7, 0, 'WMS_inv_sto_5', 2, 'Options'),
+(8, 0, 'WMS_inv_sto_6', 2, '📦 Transfer'),
+(9, 0, 'CMS_Log_USR', 5, 'Username'),
+(10, 0, 'CMS_Log_EMA', 5, 'Email'),
+(11, 0, 'CMS_Log_PSW', 5, 'Password'),
+(12, 0, 'CMS_Log_BT1', 5, 'Send'),
+(13, 0, 'CMS_Log_HL1', 5, 'Log in'),
+(14, 0, 'CMS_Log_HL2', 5, 'Create Account'),
+(15, 0, 'CMS_Log_EXT', 5, 'Enter your details to continue.');
 
 -- CMS_content_raw
 CREATE TABLE CMS_content_raw (
@@ -274,6 +286,7 @@ CREATE TABLE CMS_menu_links (
     lang_id INT NOT NULL,
     pages_id INT NOT NULL,
     rights_id INT NOT NULL,
+	label VARCHAR(255) NOT NULL, 
     description TEXT,
     sort INT NOT NULL,
     style VARCHAR(20),
@@ -282,6 +295,13 @@ CREATE TABLE CMS_menu_links (
     FOREIGN KEY (pages_id) REFERENCES CMS_Pages(id) ON DELETE CASCADE,
     FOREIGN KEY (rights_id) REFERENCES Prof_Rights(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO CMS_menu_links (id, lang_id, pages_id, rights_id, label, description, sort, style, created_on) VALUES
+(0, 0, 0, 0, 'Home', 'The starting page', 0, 'CMS_GM_Item', now()),
+(1, 0, 1, 1, 'CMS - Forms', 'Forms generator', 21, 'CMS_GM_Item', now()),
+(2, 0, 2, 4, 'WMS - Inventory', 'Inventory management', 10, 'CMS_GM_Item', now()),
+(3, 0, 3, 1, 'CMS - Pages', 'Pages generator', 20, 'CMS_GM_Item', now()),
+(4, 0, 4, 1, 'CMS - Form Items', 'Form Items generator', 22, 'CMS_GM_Item', now()),
+(5, 0, 5, 0, 'Login / New account', 'You can log in or create an account here', 1, 'CMS_GM_Item', now());
 
 -- WMS_Locations
 CREATE TABLE WMS_Locations (

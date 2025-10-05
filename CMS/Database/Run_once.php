@@ -2,9 +2,11 @@
 // Reference = w3schools
 
 /* SQL */
-$SQL_Server = "10.0.1.101";
-$SQL_Username = "admin";
-$SQL_Password = "i572944";
+//$SQL_Server = "10.0.1.101";
+$SQL_Server = "localhost";
+$SQL_Username = "root";
+$SQL_Password = "";
+//$SQL_Password = "i572944";
 $SQL_DB1 = "NGO_Foodbank";
 $SQL_File = 'Create_database.sql';
 $SQL_Commands = file_get_contents($SQL_File);
