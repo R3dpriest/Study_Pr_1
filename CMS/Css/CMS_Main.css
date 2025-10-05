@@ -89,6 +89,7 @@ option{background-color: var(--Co3); color: var(--Co2);}
 .CMS_But:hover{ background: linear-gradient(to bottom, var(--Co4), var(--Co3)); box-shadow: 0 3px var(--Co5); color: var(--Co1);}
 .CMS_But:active{box-shadow: 0 4px #bde4bf82; transform: translateY(3px); }
 .CMS_But:disabled::after{content: " (disabled)"; font-style: italic;}
+.CMS_But_a{padding: 4px;}
 
 /* Banner & menu */
 * { box-sizing: border-box; }
@@ -109,10 +110,11 @@ option{background-color: var(--Co3); color: var(--Co2);}
 .CMS_Menu_But { inline-size: 44px; block-size: 44px; display: grid; place-items: center; cursor: pointer; border-radius: 8px; transition: background .2s ease; user-select: none; }
 .CMS_Menu_But:where(:hover, :focus-visible) { background: rgba(255,255,255,0.08); outline: none; }
 .CMS_Menu_But .CMS_Menu_Line, .CMS_Menu_But::before,
-.CMS_Menu_But::after{ content: ""; display: block; inline-size: 22px; block-size: 2px; background: var(--bar-fg); border-radius: 2px; transition: transform .25s ease, opacity .2s ease; }
+.CMS_Menu_But::after{ content: ""; display: block; inline-size: 22px; block-size: 2px; background: var(--Co2); border-radius: 2px; transition: transform .25s ease, opacity .2s ease; }
 .CMS_Menu_But::before{ transform: translateY(-6px); }
 .CMS_Menu_But::after{ transform: translateY(6px); }
 .CMS_Nav_overlay{ position: fixed; top: var(--B-H); left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.35); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 900; }
+.CMS_Menu_Line{}
 
 /* Sticky top bar */
 .CMS_Top{ position: sticky; top: 0; inset-inline: 0; block-size: var(--B-H); background: var(--Bg1); color: var(--Co1); display: flex; align-items: center; justify-content: space-between; padding-inline: 16px; z-index: 1000; box-shadow: 0 1px 0 rgba(0,0,0,0.08); }
@@ -122,6 +124,10 @@ option{background-color: var(--Co3); color: var(--Co2);}
 /* font related */
 .CMS_Error{color: var(--Er1);}
 h2{margin-top: 3px; margin-bottom: 3px;}
+
+/* Aligning */
+.CMS_AlCen{align-items: center;}
+.CMS_JuCen{justify-content: center;}
 
 /* General Commands */
 .CMS_DisNon{display: none;}
