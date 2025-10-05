@@ -1,8 +1,9 @@
 <?php
 /* Read file (ignore this) OR Write file (process and output to file) OR Process (just echo as normal) */
 
-function CMS_Content_Generation(Page){
-	//grab items attached to page
+function CMS_Content_Generation($Page){
+	
+	global $SQL_Con;//grab items attached to page
 	$CMS_Content1a = "SELECT * FROM CMS_Page_content WHERE Pages_id = :CMS_P_id ORDER BY sort ASC;";
 	$CMS_Content1b = $SQL_Con->prepare($CMS_Content1a);
 	$CMS_Content1b->execute([':CMS_P_id' => $Page]);

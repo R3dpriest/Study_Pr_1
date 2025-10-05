@@ -1,1 +1,1 @@
-<?PHP include_once __dir__ . "CMS_Footer.php"; ?>
+<?PHP include_once __dir__ . DIRECTORY_SEPARATOR . "CMS_Footer.php"; ?>
