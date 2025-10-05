@@ -1,5 +1,5 @@
 <?PHP 
-function LoadPrevPage(Msge){
+function LoadPrevPage($Msge){
 	if(isset($Msge)){
 		$Ex = '?Msg=';
 	} else { $Ex = ''; }
@@ -13,4 +13,21 @@ function StorePage(){
 	$Hos = $_SERVER['HTTP_HOST'];
 	$Pag = $_SERVER['REQUEST_URI'];
 	$_SESSION['Pre_Page'] = $Pro . $Hos . $Pag;
+}
+/*
+function CMS_GrabRawTranslations($P_id, $L_id){
+	global $SQL_Con; 
+	$CMS_ExTrans1 = "SELECT text FROM `cms_translations_other` where `page_id` = :P_id AND `lang_id` = :L_id";
+	$CMS_ExTrans2 = $SQL_Con->prepare($CMS_ExTrans1);
+	$CMS_ExTrans2->execute([':P_id' => $P_id, ':L_id' => $L_id]);
+	$CMS_ExTrans3 = $CMS_ExTrans2->fetchAll(PDO::FETCH_ASSOC);
+	print_r($CMS_ExTrans3);
+}*/
+function CMS_GrabRawTranslations($P_id, $L_id){
+	global $SQL_Con, $CMS_ExTrans3; 
+    $CMS_ExTrans1 = "SELECT handle_tag, text FROM cms_translations_other WHERE page_id = :P_id AND lang_id = :L_id";
+    $CMS_ExTrans2 = $SQL_Con->prepare($CMS_ExTrans1);
+    $CMS_ExTrans2->execute([':P_id' => $P_id, ':L_id' => $L_id]);
+    $CMS_ExTrans3 = $CMS_ExTrans2->fetchAll(PDO::FETCH_KEY_PAIR);
+    return $CMS_ExTrans3;
 }
