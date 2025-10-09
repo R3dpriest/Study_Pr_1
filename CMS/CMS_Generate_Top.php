@@ -1,7 +1,7 @@
 <header class="CMS_Top" role="banner">
     <div class="CMS_DisFlex">
 		<div class="CMS_DisFlex CMS_JuCen CMS_AlCen CMS_DisBox">
-			<?PHP if(isset($_SESSION['CMS_1'])){ echo $_SESSION['CMS_1']; }
+			<?PHP if(isset($_SESSION['CMS_2'])){ echo "<a class='CMS_But CMS_But_a' href='CMS_Profile.php?u=".$_SESSION['CMS_1']."'>".$_SESSION['CMS_2']."</a>"; }
 			else {?>
 				<a class="CMS_But CMS_But_a" href="CMS_login.php">Login</a>
 			<?PHP } ?>

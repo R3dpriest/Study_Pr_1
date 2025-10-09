@@ -11,6 +11,7 @@ if(empty($_SESSION['CMS_CHK_TKN'])){$_SESSION['CMS_CHK_TKN'] = bin2hex(random_by
 </div>
 <div class="CMS_TabContent">
 	<div class="Tab_Login CMS_TabData">
+<?PHP if(isset($_GET['M'])){ echo "<div class='CMS_LG_N CMS_mw_f CMS_DisFlex'>".$_GET['M']."</div>";} ?>
 		<h1 id="CMS_Log_title"><?PHP echo $CMS_ExTrans3['CMS_Log_HL1']; ?></h1>
 		<form id="loginForm" name="loginForm" method="POST" action="CMS_Login_catch.php?s=1" target="_SELF">
 		<input type="hidden" name="CMS_TOK" value="<?php echo $_SESSION['CMS_CHK_TKN']; ?>">

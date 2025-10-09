@@ -11,6 +11,7 @@
 	--Co4: #e0e0e0;
 	--Co5: #f4f5f7;
 	--Bg1: #f7f9fc;
+	--Bg2: #5e3618;
 	--Tx1: #020e31;
 	--Er1: #f10e66;
 	--Mono: #3c251930;
@@ -25,8 +26,9 @@
 	--Co4: #181009;
 	--Co5: #1E1E1E;
 	--Bg1: #121212;
+	--Bg2: #5e3618;
 	--Tx1: #EAEAEA;
-	--Er1: #f10e66;
+	--Er1: #590000;
 	--Mono: #3c251930;
 	--B-H: 60px; --M-W: 240px;
 }
@@ -38,8 +40,9 @@
 	--Co4: #181009;
 	--Co5: #1E1E1E;
 	--Bg1: #121212;
+	--Bg2: #5e3618;
 	--Tx1: #EAEAEA;
-	--Er1: #f10e66;
+	--Er1: #590000;;
 	--Mono: #3c251930;
 	--B-H: 60px; --M-W: 240px;
 }
@@ -50,6 +53,7 @@
 	--Co4: #e0e0e0;
 	--Co5: #f4f5f7;
 	--Bg1: #f7f9fc;
+	--Bg2: #5e3618;
 	--Tx1: #020e31;
 	--Er1: #f10e66;
 	--Mono: #3c251930;
@@ -128,6 +132,7 @@ h2{margin-top: 3px; margin-bottom: 3px;}
 /* Aligning */
 .CMS_AlCen{align-items: center;}
 .CMS_JuCen{justify-content: center;}
+.CMS_80vh{height: 80vh}
 
 /* General Commands */
 .CMS_DisNon{display: none;}
@@ -136,10 +141,20 @@ h2{margin-top: 3px; margin-bottom: 3px;}
 .CMS_DisBox{flex: 1;}
 .CMS_FlNstr{flex-grow: 0;}
 
+.CMS_mw_f{max-width: fit-content;}
+.CMS_m_T_11{margin-top: 11px;}
+.CMS_m_R_5{margin-right: 5px;}
+
+/* CMS LOGIN */
+.CMS_LB_E{background: var(--Er1); color: var(--Co2); font-weight: bold; padding: 5px; max-width: fit-content; border-radius: 8px;}
+.CMS_LG_N{background: var(--Bg2); border: var(--Co1); border-radius: 6px; padding: 8px;}
+
+/* CMS General */
+.CMS_ER_I{ width: 50%; height: auto;}
+
 
 
 /* WMS */
-
 .WMS_Tile_container{ padding: 4px;}
 .WMS_Tile_Content{margin: 2px; padding: 4px; border: 2px solid var(--Co1); background-color: var(--Co5); border-radius: 3px;}
 .WMS_Ing_list thead tr th{writing-mode: vertical-lr; transform: rotate(180deg); text-align: center; vertical-align: middle; padding: 3px 10px;}
