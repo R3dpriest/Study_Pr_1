@@ -2,6 +2,7 @@
 
 include_once __dir__ . DIRECTORY_SEPARATOR . "CMS_Template_Filestart.php"; 
 
+
 if(session_status() !== PHP_SESSION_ACTIVE){session_start();}
 global $CMS_ExTrans3;
 if(empty($_SESSION['CMS_CHK_TKN'])){$_SESSION['CMS_CHK_TKN'] = bin2hex(random_bytes(32));} ?>
@@ -13,7 +14,7 @@ if(empty($_SESSION['CMS_CHK_TKN'])){$_SESSION['CMS_CHK_TKN'] = bin2hex(random_by
 	<div class="Tab_Login CMS_TabData">
 <?PHP if(isset($_GET['M'])){ echo "<div class='CMS_LG_N CMS_mw_f CMS_DisFlex'>".$_GET['M']."</div>";} ?>
 		<h1 id="CMS_Log_title"><?PHP echo $CMS_ExTrans3['CMS_Log_HL1']; ?></h1>
-		<form id="loginForm" name="loginForm" method="POST" action="CMS_Login_catch.php?s=1" target="_SELF">
+		<form id="loginForm" name="loginForm" method="POST" action="CMS_Login_catch.php?Q=1" target="_SELF">
 		<input type="hidden" name="CMS_TOK" value="<?php echo $_SESSION['CMS_CHK_TKN']; ?>">
 		<table>
 			<thead></thead>
@@ -25,6 +26,10 @@ if(empty($_SESSION['CMS_CHK_TKN'])){$_SESSION['CMS_CHK_TKN'] = bin2hex(random_by
 				<tr>
 					<td><label for="Log_password"><?PHP echo $CMS_ExTrans3['CMS_Log_PSW']; ?></label></td>
 					<td><input id="CMS_password1" name="Log_password" type="password" autocomplete="current-password" required minlength="8" maxlength="20" aria-invalid="false" placeholder="••••••••" /></td>
+				</tr>
+				<tr>
+					<td><label for="log_stay"><?PHP echo $CMS_ExTrans3['CMS_Log_STA']; ?></label></td>
+					<td><input type="checkbox" name="Log_stay"></td>
 				</tr>
 				<tr>
 					<td><button type="submit" class="CMS_But"><?PHP echo $CMS_ExTrans3['CMS_Log_BT1']; ?></button></td>
@@ -41,7 +46,7 @@ if(empty($_SESSION['CMS_CHK_TKN'])){$_SESSION['CMS_CHK_TKN'] = bin2hex(random_by
 		<h1 id="CMS_Log_title"><?PHP echo $CMS_ExTrans3['CMS_Log_HL2']; ?></h1>
 		<p class="sub"><?PHP echo $CMS_ExTrans3['CMS_Log_EXT']; ?></p>
 		<p id="JsEna">Javascript seems disabled. This means that certain scripts are disabled.</p>
-		<form id="CreateForm" name="CreateForm" method="POST" action="CMS_Login_catch.php?s=2" target="_SELF">
+		<form id="CreateForm" name="CreateForm" method="POST" action="CMS_Login_catch.php?Q=2" target="_SELF">
 		<input type="hidden" name="CMS_TOK" value="<?php echo $_SESSION['CMS_CHK_TKN']; ?>">
 		<table>
 			<thead></thead>

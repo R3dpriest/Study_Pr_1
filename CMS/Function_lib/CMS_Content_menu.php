@@ -83,7 +83,7 @@ function CMS_Rights_Labels($Inp7){
 	$GxQ .= "</select>";
 }
 function WMS_GrabAllLocations($Inp8){
-	global $SQL_Con;
+	global $SQL_Con, $Gxe;
 	$Gxe = "<select id='".$Inp8."' form='".$Inp8."'>";
 	$CMS_Content8a = "SELECT * FROM WMS_Locations WHERE loc_enabled = true";
 	$CMS_Content8b = $SQL_Con->prepare($CMS_Content8a);

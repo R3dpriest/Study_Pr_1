@@ -3,7 +3,7 @@ include_once __dir__ . DIRECTORY_SEPARATOR . "CMS_Template_Filestart.php";
 
 if(session_status() !== PHP_SESSION_ACTIVE){session_start();}
 
-$Pa = $_GET['Pa'];
+$Pa = $_GET['Q'];
 if(empty($_SESSION['CMS_CHK_TKN'])){$_SESSION['CMS_CHK_TKN'] = bin2hex(random_bytes(32));}
 
 switch($Pa){

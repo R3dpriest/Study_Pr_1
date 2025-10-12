@@ -1,7 +1,7 @@
 SET @old_sql_mode = @@SESSION.sql_mode;
 SET @@SESSION.sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
--- Default password: 
+
 
 -- Prof_right_names
 CREATE TABLE Prof_right_names (
@@ -30,7 +30,10 @@ INSERT INTO Prof_Rights (id, title, description) VALUES
 (3, 'Logged Read', 'Generic tag for people logged in.'),
 (4, 'Open WMS', 'User can view WMS data'),
 (5, 'Edit WMS', 'User can alter WMS data'),
-(6, 'Not logged in', 'This cannot be seen if logged in.');
+(6, 'Not logged in', 'This cannot be seen if logged in.'),
+(7, 'See Clients', 'Profile - this account can see clients'),
+(8, 'See Staff', 'Profile - this account can see Staff'),
+(9, 'See Donors', 'Profile - this account can see Donors');
 
 -- Prof_Users GlobalAdmin F0()dB&nkPw GenericUser G3ner!cPassword
 CREATE TABLE Prof_Users (
@@ -49,6 +52,20 @@ INSERT INTO Prof_Users (id, username, email, hashed_password, right_names_id, en
 (1, 'GenericUser', 'example@example.org', '$2y$12$sogk9IV7qHjevlL.gqRui.fKBazmvikbygxTM.ojcz/1RywcUJ7eq', 2, true),
 (2, 'ClientUser1', 'example@example.de', 'HASH', 2, true),
 (3, 'ClientUser2', 'example@example.nl', 'HASH', 2, true);
+
+CREATE TABLE Prof_Login_Handle (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	prof_id INT NOT NULL,
+	tok_selector CHAR(16) NOT NULL, -- pubid
+	tok_hash CHAR(64) NOT NULL, 	-- SHA-256
+	tok_usera_hash CHAR(64) NULL,
+	tok_created DATETIME NOT NULL,
+	tok_expires DATETIME NOT NULL,
+	tok_last_use DATETIME NULL,
+	tok_revoked TINYINT(1) NOT NULL DEFAULT 0,
+	UNIQUE KEY uniq_selector (tok_selector),
+	FOREIGN KEY (prof_id) REFERENCES Prof_Users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- CMS_Lang
 CREATE TABLE CMS_Lang (
@@ -81,7 +98,7 @@ CREATE TABLE Prof_profiles (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO Prof_profiles (id, users_id, first_name, last_name, street, city, phone, donor, client, staff, vegetarian, loc_id, lang_id) VALUES
-(0, 0, 'Name', 'Namerson', 'Long Name Street', 'Short City', '1234123412', true, false, false, true, 0, 0),
+(0, 0, 'Name', 'Namerson', 'Long Name Street', 'Short City', '1234123412', false, false, true, true, 0, 0),
 (1, 1, 'Naam', 'Naamsen', 'lange Naam Laan', 'Korte Stad', '1234567890', true, false, false, true, 1, 0),
 (2, 2, 'Client 1', 'clientson', 'Long ClientName', 'ClientCity', '1231231230', false, true, false, false, 2, 0),
 (3, 3, 'Client 2', 'clientbar', 'Long StreetName', 'ClientCity', '1223164230', false, true, false, false, 2, 0);
@@ -98,7 +115,7 @@ CREATE TABLE Prof_right_profiles (
 
 INSERT INTO Prof_right_profiles (right_names_id, rights_id) VALUES
 (0, 0), (0, 6),
-(1, 0), (1, 3), (1, 1), (1, 2),
+(1, 0), (1, 1), (1, 2), (1, 3), (1, 7), (1, 8), (1, 9),
 (2, 0), (2, 3),
 (3, 0), (3, 3), (3, 4), (3, 5);
 
@@ -120,6 +137,7 @@ CREATE TABLE CMS_Pages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     page_name VARCHAR(100) NOT NULL,
     page_ext VARCHAR(50) NOT NULL,
+	page_opt VARCHAR(255) NOT NULL,
     lang_id INT NOT NULL,
     lang_Tx VARCHAR(3),
     read_id INT DEFAULT 0,
@@ -130,18 +148,19 @@ CREATE TABLE CMS_Pages (
 	FOREIGN KEY (read_id) REFERENCES Prof_Rights(id) ON DELETE CASCADE,
 	FOREIGN KEY (read_write_id) REFERENCES Prof_Rights(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_cms_page (lang_id, page_name, page_ext)
+    UNIQUE KEY unique_cms_page (lang_id, page_name, page_ext, page_opt)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Pages (id, page_name, page_ext, lang_id, lang_Tx, read_id, read_write_id, page_head, page_load_options) VALUES
-(0, 'Index', '.php', 0, 'EN', 0, 2, 'Welcome', 'process'),
-(1, 'CMS_EDI_For', '.php?Pa=1', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
-(2, 'WMS_Inventory', '.php', 0, 'EN', 4, 5, 'WMS - Inventory', 'lock'),
-(3, 'CMS_EDI_For', '.php?Pa=2', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
-(4, 'CMS_EDI_For', '.php?Pa=3', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
-(5, 'CMS_Login', '.php', 0, 'EN', 0, 2, 'Login Page', 'lock'),
-(6, 'CMS_Login_catch' , '.php', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
-(7, 'CMS_Login_catch' , '.php?s=3', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock');
+INSERT INTO CMS_Pages (id, page_name, page_ext, page_opt, lang_id, lang_Tx, read_id, read_write_id, page_head, page_load_options) VALUES
+(0, 'Index', '.php', '', 0, 'EN', 0, 2, 'Welcome', 'process'),
+(1, 'CMS_EDI_For', '.php', '?Q=1', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(2, 'WMS_Inventory', '.php', '', 0, 'EN', 4, 5, 'WMS - Inventory', 'lock'),
+(3, 'CMS_EDI_For', '.php', '?Q=2', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(4, 'CMS_EDI_For', '.php', '?Q=3', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(5, 'CMS_Login', '.php', '', 0, 'EN', 0, 2, 'Login Page', 'lock'),
+(6, 'CMS_Login_catch' , '.php', '', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
+(7, 'CMS_Login_catch' , '.php', '?Q=3', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
+(8, 'CMS_Profile', '.php', '', 0, 'EN', 3, 2, 'Profile', 'lock');
 
 -- CMS_Page_content
 CREATE TABLE CMS_Page_content (
@@ -229,6 +248,7 @@ CREATE TABLE CMS_Translations_Other (
     page_id INT NOT NULL,
     text VARCHAR(100) NOT NULL,
     FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE,
+	FOREIGN KEY (page_id) REFERENCES CMS_Pages(id) ON DELETE CASCADE,
     UNIQUE KEY unique_translate_lang (lang_id, page_id, handle_tag)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -248,22 +268,33 @@ INSERT INTO CMS_Translations_Other (id, lang_id, handle_tag, page_id, text) VALU
 (12, 0, 'CMS_Log_BT1', 5, 'Send'),
 (13, 0, 'CMS_Log_HL1', 5, 'Log in'),
 (14, 0, 'CMS_Log_HL2', 5, 'Create Account'),
-(15, 0, 'CMS_Log_EXT', 5, 'Enter your details to continue.'),
-(16, 0, 'CMS_Log_0Nm', 6, 'Only letters A–Z allowed.'),
-(17, 0, 'CMS_Log_0Pw1', 6, 'Password must be 8–20 characters long.'),
-(18, 0, 'CMS_Log_0Pw2', 6, 'Password must include at least one lowercase letter.'),
-(19, 0, 'CMS_Log_0Pw3', 6, 'Password must include at least one uppercase letter.'),
-(20, 0, 'CMS_Log_0Pw4', 6, 'Password must include at least one digit.'),
-(21, 0, 'CMS_Log_0Pw5', 6, 'Password must include at least one special character'),
-(22, 0, 'CMS_Log_0Pw6', 6, 'Passwords do not match'),
-(23, 0, 'CMS_Log_0Pw7', 6, 'An empty field was detected'),
-(24, 0, 'CMS_Log_0Au', 6, 'This email account is already known.'),
-(25, 0, 'CMS_Log_0Ae', 6, 'A user with this name exists.'),
-(26, 0, 'CMS_Log_Erd', 6, 'An error has been detected.'),
-(27, 0, 'CMS_Log_Erb', 6, 'Return'),
-(28, 0, 'CMS_Log_LSu', 6, 'Account created.'),
-(29, 0, 'CMS_Log_Er1', 6, 'Credential combinations unknown.'),
-(30, 0, 'CMS_Log_Er2', 6, 'Account inactive.');
+(15, 0, 'CMS_Log_STA', 5, 'Stay Logged In.'),
+(16, 0, 'CMS_Log_EXT', 5, 'Enter your details to continue.'),
+(17, 0, 'CMS_Log_0Nm', 6, 'Only letters A–Z allowed.'),
+(18, 0, 'CMS_Log_0Pw1', 6, 'Password must be 8–20 characters long.'),
+(19, 0, 'CMS_Log_0Pw2', 6, 'Password must include at least one lowercase letter.'),
+(20, 0, 'CMS_Log_0Pw3', 6, 'Password must include at least one uppercase letter.'),
+(21, 0, 'CMS_Log_0Pw4', 6, 'Password must include at least one digit.'),
+(22, 0, 'CMS_Log_0Pw5', 6, 'Password must include at least one special character'),
+(23, 0, 'CMS_Log_0Pw6', 6, 'Passwords do not match'),
+(24, 0, 'CMS_Log_0Pw7', 6, 'An empty field was detected'),
+(25, 0, 'CMS_Log_0Au', 6, 'This email account is already known.'),
+(26, 0, 'CMS_Log_0Ae', 6, 'A user with this name exists.'),
+(27, 0, 'CMS_Log_Erd', 6, 'An error has been detected.'),
+(28, 0, 'CMS_Log_Erb', 6, 'Return'),
+(29, 0, 'CMS_Log_LSu', 6, 'Active'),
+(30, 0, 'CMS_Log_Er1', 6, 'Credential combinations unknown.'),
+(31, 0, 'CMS_Log_Er2', 6, 'Account inactive.'),
+(32, 0, 'CMS_Pro_1eN', 8, 'First Name'),
+(33, 0, 'CMS_Pro_2eN', 8, 'Second Name'),
+(34, 0, 'CMS_Pro_CoN', 8, 'Company Name'),
+(35, 0, 'CMS_Pro_ENA', 8, 'Active'),
+(36, 0, 'CMS_Pro_CRE', 8, 'Joined at'),
+(37, 0, 'CMS_Pro_STR', 8, 'Street'),
+(38, 0, 'CMS_Pro_CIT', 8, 'City'),
+(39, 0, 'CMS_Pro_PHO', 8, 'Phone Number'),
+(40, 0, 'CMS_Pro_VEG', 8, 'Vegetarian'),
+(41, 0, 'CMS_Pro_DEF', 8, 'Location');
 
 -- CMS_content_raw
 CREATE TABLE CMS_content_raw (
