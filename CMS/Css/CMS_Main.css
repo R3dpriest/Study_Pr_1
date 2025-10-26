@@ -92,7 +92,7 @@ select{ font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: bold; 
 select:hover {background: linear-gradient(to bottom, var(--Co4), var(--Co3)); box-shadow: 0 3px var(--Co5); color: var(--Co1);}
 option{background-color: var(--Co3); color: var(--Co2);}
 /* Buttons */
-.CMS_But{min-width: fit-content; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: bold; color: var(--Co2); background: linear-gradient(to bottom, var(--Co3), var(--Co4)); border: none; border-radius: 8px; box-shadow: 0 5px var(--Sh1); cursor: pointer; position: relative; transition: box-shadow 0.2s ease, background-color 2s ease; border: 1px solid var(--Co1); padding: 4.5px 9px; margin-right: 2px;}
+.CMS_But{width: 100%; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: bold; color: var(--Co2); background: linear-gradient(to bottom, var(--Co3), var(--Co4)); border: none; border-radius: 8px; box-shadow: 0 5px var(--Sh1); cursor: pointer; position: relative; transition: box-shadow 0.2s ease, background-color 2s ease; border: 1px solid var(--Co1); margin-top: 3px; padding: 2px;}
 .CMS_But:hover{ background: linear-gradient(to bottom, var(--Co4), var(--Co3)); box-shadow: 0 3px var(--Co5); color: var(--Co1);}
 .CMS_But:active{box-shadow: 0 4px #bde4bf82; transform: translateY(3px); }
 .CMS_But:disabled::after{content: " (disabled)"; font-style: italic;}
@@ -133,17 +133,17 @@ option{background-color: var(--Co3); color: var(--Co2);}
 h2{margin-top: 3px; margin-bottom: 3px;}
 
 /* Aligning */
+.CMS_TaCe{text-align: center;}
 .CMS_AlCen{align-items: center;}
 .CMS_JuCen{justify-content: center;}
 .CMS_80vh{height: 80vh}
 .CMS_I_C{display: block; margin-left: auto; margin-right: auto; width: 50%;}
 
 /* H and W*/
-
-.CMS_W_200{width: 200px;}
 .CMS_MW_250{max-width: 250px;}
 .CMS_MW_450{max-width: 450px;}
 .CMS_MW_700{max-width: 700px;}
+.CMS_MI_w250{min-width: 250px;}
 
 /* General Commands */
 .CMS_DisNon{display: none;}
@@ -164,10 +164,6 @@ h2{margin-top: 3px; margin-bottom: 3px;}
 
 .CMS_S_100x100{height: 100px; width: 100px;}
 
-
-/* CMS EDI */
-.CMS_S_MW_195 select{max-width: 195px;}
-
 /* CMS LOGIN */
 .CMS_LB_E{background: var(--Er1); color: var(--Co2); font-weight: bold; padding: 5px; max-width: fit-content; border-radius: 8px;}
 .CMS_LG_N{background: var(--Bg2); border: var(--Co1); border-radius: 6px; padding: 8px;}
@@ -175,14 +171,12 @@ h2{margin-top: 3px; margin-bottom: 3px;}
 /* CMS_Prof */
 .CMS_URPR_Dat{gap: 3px;}
 .CMS_URPR_Window{font-size: 19px;}
-.CMS_Prof_I div{padding: 4px; flex-direction: row;}
 .CMS_Prof_R div{padding: 4px; flex-direction: row;}
 .CMS_Prof_R > :nth-child(1) { width: 180px;} .CMS_Prof_R > :nth-child(2) { width: 400px;}
 
 /* CMS General */
 .CMS_ER_I{ width: 50%; height: auto;}
-.CMS_St_bc{ border: 2px solid var(--Co1); background-color: var(--Co5); border-radius: 4px;}
-.CMS_Gen_BG{}
+.CMS_St_bc{ border: 2px solid var(--Co1); background-color: var(--Co5);}
 
 /* WMS */
 .WMS_Tile_container{ padding: 4px;}

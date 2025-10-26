@@ -21,7 +21,7 @@ GrabAllLocations("Location"); --!>
 		<select><option>Example</option><option>Example</option><option>Example</option></select></div>
 		<div class="WMS_Tile_Content CMS_DisBox">
 			<h2>General information<h2>
-			<table class="WMS_Ing_list">
+			<table class="WMS_Ing_list" id="WMS_Ing_list">
 				<thead>
 				</thead>
 				<tbody>
@@ -81,8 +81,12 @@ GrabAllLocations("Location"); --!>
 	</div>
 	<div class="CMS_DisFlex">
 		<div class="WMS_Tile_Content CMS_DisBox CMS_FlNstr">
+		<h2>Options<h2>
 		<select><option>Donations</option><option>Processed</option><option>Transferred</option></select>
-		<button class="CMS_But">Audit</button>
+		<button class="CMS_But" id="WMS_SB_AD">Audit</button>
+		<button class="CMS_But" id="WMS_SB_RE">Recepies</button>
+		<button class="CMS_But" placeholder="Low Stock / Overstock" id="WMS_SB_AL">Analyse</button>
+		<button class="CMS_But" id="WMS_SB_SL">Shelflife</button>
 		</div>
 		<div class="WMS_Tile_Content CMS_DisBox">
 			<table class="WMS_Ing_list">

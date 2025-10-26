@@ -30,6 +30,11 @@ $(document).ready(function(){
         }
     });
 });
+	$('#WMS_SB_AD').on('click', function(){ window.location.href = "Audit.php"; });
+	$('#WMS_SB_RE').on('click', function(){ window.location.href = "Recipy.php"; });
+	$('#WMS_SB_AL').on('click', function(){ window.location.href = "Analysis.php"; });
+	$('#WMS_SB_SL').on('click', function(){ window.location.href = "ShelfLife.php"; });
+
 });
 
 

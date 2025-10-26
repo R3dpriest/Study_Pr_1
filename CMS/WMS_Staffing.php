@@ -1,11 +1,11 @@
 <?PHP
 	
-global $CSY, $CSA, $CSB, $CSC, $CSD, $CSE, $CSF, $CSG, $CGY, $CGA, $CGB, $CGC, $CGD, $CGE, $CGF, $CGG, $CYY, $CLY;
+global $CSY, $CSA, $CSB, $CSC, $CSD, $CSE, $CSF, $CSG, $CGY, $CGA, $CGB, $CGC, $CGD, $CGE, $CGF, $CGG, $CYY, $CLY, $CSH;
 $CSY = []; $CGY = "";	$CYY = []; $CLY = "";
 $CSA = []; $CGA = ""; 	$CSB = []; $CGB = "";
 $CSC = []; $CGC = "";	$CSD = []; $CGD = "";
 $CSE = []; $CGE = "";	$CSF = []; $CGF = "";
-$CSG = []; $CGG = "";
+$CSG = []; $CGG = "";	$CSH = "";
 function WMS_CreateJobList(){
 	global $JobArray;
 	static $WMS_RosterCheck = false;
@@ -51,10 +51,23 @@ WHERE PU.enabled = TRUE AND PP.staff = TRUE AND PP.loc_id = :loc_id;";
 $WMS_QRY1b = $GLOBALS['SQL_Con']->prepare($WMS_QRY1a);
 $WMS_QRY1b->execute([':loc_id' => $lan_id]);
 $WMS_QRY1c = $WMS_QRY1b->fetchAll(PDO::FETCH_ASSOC);
-foreach ($WMS_QRY1c as $ReIndex) { $CYY[$ReIndex['user_id']] = $ReIndex;
+foreach ($WMS_QRY1c as $ReIndex) {
+	
+	if (!empty($ReIndex['date_gone_start']) && !empty($ReIndex['date_gone_end'])) {
+		$WMS_Gone = strtotime($ReIndex['date_gone_start'] . ' ' . $ReIndex['date_gone_end']);
+		$WMS_Now = time();
+		if ($WMS_Now <= $WMS_Gone) {
+			$WMS_Gone = true;
+		}
+	}
 
-	WMS_CreateSelectList('Mo'.$ReIndex['user_id'], $ReIndex['roles_id']);
-	$CLY .= '<li data-id="'.$ReIndex['user_id'].'"><div><div>'.$ReIndex['first_name'].' '.$ReIndex['last_name'].'</div><div>'.$CSL.'<button class="CMS_Dup">+</button></div></div></li>';
+	if($WMS_Gone){
+		$CSH .= '<li data-id="'.$ReIndex['user_id'].'"><div><div>'.$ReIndex['first_name'].' '.$ReIndex['last_name'].'</div><div><select><option>-</option></select><button class="CMS_Dup">x</button></div></div></li>';
+	} else {
+		$CYY[$ReIndex['user_id']] = $ReIndex;
+		WMS_CreateSelectList('Mo'.$ReIndex['user_id'], $ReIndex['roles_id']);
+		$CLY .= '<li data-id="'.$ReIndex['user_id'].'"><div><div>'.$ReIndex['first_name'].' '.$ReIndex['last_name'].'</div><div>'.$CSL.'<button class="CMS_Dup">+</button></div></div></li>';
+	}
 }
 
 $WMS_QRY2a = "SELECT * FROM WMS_Roster WHERE loc_id = :loc_id";
@@ -132,9 +145,6 @@ foreach($CSY as $Y){
 </div><div class="WMS_Cal_Cal"><h2>Calander</h2><div class="CMS_Cal_Header CMS_DisFlex"><div class="CMS_DisBox CMS_FlNstr CMS_DisFlex CMS_AlCen"><button onclick="CMS_Cal_CM(-1)">←</button></div><div class="CMS_DisBox CMS_TaCe"><h2 id="CMS_Mo_Ye"></h2></div><div class="CMS_DisBox CMS_FlNstr CMS_DisFlex CMS_AlCen"><button onclick="CMS_Cal_CM(1)">→</button></div></div><div class="CMS_Cal_Week" id="CMS_Cal_Week"></div><div class="CMS_Cal_Grid" id="CMS_Cal_Grid"></div></div></div></div>
 <div class="WMS_Cal_Bot CMS_DisFlex"><div class="staff WMS_Cal_BLeft CMS_DisBox" id="WMS_Mo_AvSt"><h2>Available Staff</h2><ul id="WMS_Cal_Ava" class="WMS_Roster_Available WMS_Cal_Sort CMS_SL_N CMS_Cu_Gr">
 <? echo $CSY; ?>
-</ul></div><div class="staff WMS_Cal_BRight CMS_DisBox" id="unWMS_Mo_AvSt"><h2>[not implemented]Unavailable Staff</h2><ul id="WMS_Cal_Una" class="WMS_Roster_Unav CMS_SL_N">
-
-
-
-
+</ul></div><div class="staff WMS_Cal_BRight CMS_DisBox" id="unWMS_Mo_AvSt"><h2>Unavailable Staff</h2><ul id="WMS_Cal_Una" class="WMS_Roster_Unav CMS_SL_N">
+<?PHP echo $CSH; ?>
 </ul></div></div></div>
