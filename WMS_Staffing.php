@@ -1,4 +1,4 @@
-<?PHP
+<?PHP 
 include_once __dir__ . DIRECTORY_SEPARATOR . "CMS_Template_Filestart.php"; 
 echo "<Script> const Param = new URLSearchParams(window.location.search); let loc_id = parseInt(Param.get('L'), 10); if(loc_id === NaN){ loc_id = ".$_SESSION['CMS_7']."; } </script>";
 echo '<script src="Javascript/WMS_General.js" defer></script>';

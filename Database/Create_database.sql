@@ -1,6 +1,6 @@
 SET @old_sql_mode = @@SESSION.sql_mode;
 SET @@SESSION.sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
+ 
 -- Prof_right_names
 CREATE TABLE Prof_right_names (
     id INT AUTO_INCREMENT PRIMARY KEY,

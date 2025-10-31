@@ -1,5 +1,5 @@
 <?PHP 
-/* 
+/*
 $_SESSION['CMS_0'] = Autologin check;
 $_SESSION['CMS_1'] = User id
 $_SESSION['CMS_2'] = User Name

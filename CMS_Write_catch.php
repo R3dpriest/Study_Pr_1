@@ -2,7 +2,7 @@
 include_once __DIR__ . "/CMS_Connection.php";
 include_once __DIR__ . "/Function_lib/CMS_General_Functions.php";
 include_once __DIR__ . "/CMS_Generate_Sub_items.php";
-
+ 
 if(isset($_SESSION['Wr_New'])){
 	//Generate CMS_Pages_Etc
 	//set Wr_Next

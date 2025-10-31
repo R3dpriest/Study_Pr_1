@@ -1,7 +1,7 @@
 <?php
 //$_SESSION['CMS_5'] == language
 UpGrabLangData($_POST['WMS_Page_name']);
-
+ 
 /* Grabs Ajax Interactions */
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 	if($_POST['WMS_Select'] === 'WMS_Inv_Catch'){

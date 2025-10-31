@@ -11,7 +11,7 @@ $(document).ready(function(){
 			error: function(xhr, status, error) {
 				console.error('Update error: ', error);
 			}
-		});
+		}); 
 	});
 	$('.WMS_Inv_Handle').on('click', function() {
 	var WMS_Inv_ID = this.id.replace(/WMS_Inv_I_/g, "");

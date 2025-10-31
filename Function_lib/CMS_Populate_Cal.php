@@ -1,4 +1,4 @@
-<?PHP
+<?PHP 
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "CMS_Connection.php";
 
 if(!isset($_SESSION['Check_calander'])){

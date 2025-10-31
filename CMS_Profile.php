@@ -1,6 +1,6 @@
 <?PHP include_once __dir__ . DIRECTORY_SEPARATOR . "CMS_Template_Filestart.php"; if(session_status() !== PHP_SESSION_ACTIVE){session_start();}
 include_once __dir__ . DIRECTORY_SEPARATOR . 'Function_lib' . DIRECTORY_SEPARATOR . 'CMS_Sec_Extra.php';
-$CMS_Prof_Dis3 = [];
+$CMS_Prof_Dis3 = []; 
 $CMS_Prof_Inp = preg_replace('/\D/', '', $_GET['u']);
 $CMS_Prof_Dis1 = "SELECT Ac.id, Ac.username, Ac.email, Ac.enabled, Ac.created_at, Pr.first_name, Pr.last_name, Pr.street, Pr.city, Pr.phone, Pr.donor, Pr.client, Pr.staff, Pr.lang_id, Pr.vegetarian, Lo.loc_name AS location, Lo.loc_city, Lo.loc_street, Lo.id AS loc_id, Ri.name AS right_name FROM prof_users Ac JOIN prof_profiles Pr ON Pr.users_id = Ac.id JOIN prof_right_names Ri ON Ri.id = Ac.right_names_id JOIN wms_locations Lo ON Pr.loc_id = Lo.id WHERE Ac.id = :p_id"; 
 $CMS_Prof_Dis2 = $GLOBALS['SQL_Con']->prepare($CMS_Prof_Dis1);

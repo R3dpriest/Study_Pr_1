@@ -1,4 +1,4 @@
-<?PHP 
+<?PHP
 // https://en.wikipedia.org/wiki/Cross-site_request_forgery
 Function CMS_TOK(){
 	if($_SERVER['REQUEST_METHOD'] === 'POST') {

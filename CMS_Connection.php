@@ -1,11 +1,11 @@
 <?PHP
 // Reference = w3schools
-
+ 
 global $SQL_Con;
 
 /* SQL */
-/*$SQL_Server = "10.0.1.100";
-$SQL_Username = "admin@10.0.1.100";
+/*$SQL_Server = "10.0.2.201";
+$SQL_Username = "admin@10.0.2.201";
 $SQL_Password = "i572944";
 */
 $SQL_Server = "localhost";

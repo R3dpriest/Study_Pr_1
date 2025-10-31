@@ -1,4 +1,4 @@
-<?PHP 
+<?PHP
 function UpGrabLangData(P_Name){
 	$GrabPage1 = "SELECT * FROM CMS_Pages WHERE page_name = :page_name AND lang_id = :lang_id";
 	$GrabPage2 = $SQL_Con->prepare($GrabPage1);

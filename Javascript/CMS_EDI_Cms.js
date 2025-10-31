@@ -1,4 +1,4 @@
-let BufferVal1 = "";
+let BufferVal1 = ""; 
 $(document).ready(function(){
 	var $CMS_EDI_Lang_Sel = $('#CMS_EDI_Lang_sub');	if ($CMS_EDI_Lang_Sel.length){$CMS_EDI_Lang_Sel.prepend('<option selected hidden value="99999">Select</option>'); $CMS_EDI_Lang_Sel.prop('selectedIndex', 0); }
 	var $CMS_Field_Lang_2 = $('#CMS_Field_Lang_2'); if ($CMS_Field_Lang_2.length){$CMS_Field_Lang_2.prepend('<option selected hidden value="99999">Select</option>'); $CMS_Field_Lang_2.prop('selectedIndex', 0); }

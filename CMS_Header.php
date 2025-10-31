@@ -21,7 +21,7 @@ if(!isset($_SESSION['CMS_3'])){
 	$PreC = $PreB->fetchAll(PDO::FETCH_COLUMN);
 	$_SESSION['CMS_3'] = $PreC;
 	$_SESSION['CMS_4'] = 0; $_SESSION['CMS_5'] = 0;
-}
+} 
 
 // Language URL
 CMS_GrabLang();

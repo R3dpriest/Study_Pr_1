@@ -1,6 +1,6 @@
 <?PHP include_once __dir__ . "CMS_Header.php"; 
 GrabAllLocations("WMS_Location");
-
+ 
 ?>
 <div class="WMS_Tile_container">
 	<div class="WMS_Tile_Content"><h2>Location<h2></div>

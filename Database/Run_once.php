@@ -1,8 +1,8 @@
 <?PHP
 // Reference = w3schools
-
+ 
 /* SQL */
-//$SQL_Server = "10.0.1.101";
+//$SQL_Server = "10.0.2.201";
 $SQL_Server = "localhost";
 $SQL_Username = "root";
 $SQL_Password = "";

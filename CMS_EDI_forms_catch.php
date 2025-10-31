@@ -1,4 +1,4 @@
-<?php
+<?php 
 $CSM_Reg_txt255s = '/^[\p{L}\p{N}\s]+$/u';
 $CSM_Reg_txt255ns = '/^[^\s]+$/';
 $CSM_Reg_txt60 = '/^.{0,60}$/u';

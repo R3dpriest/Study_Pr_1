@@ -1,4 +1,4 @@
-$(function(){
+$(function(){ 
 	// enable button
 	const fields=['#CMS_username','#CMS_email','#CMS_password1','#CMS_password2'];
 	const $btn=$("#CMS_Log_But").prop("disabled",true);

@@ -9,7 +9,7 @@ if(empty($_SESSION['CMS_CHK_TKN'])){$_SESSION['CMS_CHK_TKN'] = bin2hex(random_by
 <div class="CMS_TabHead">
 	<div class="CMS_Tab">Login</div>
 	<div class="CMS_Tab">Create account</div>
-</div>
+</div> 
 <div class="CMS_TabContent">
 	<div class="Tab_Login CMS_TabData">
 <?PHP if(isset($_GET['M'])){ echo "<div class='CMS_LG_N CMS_mw_f CMS_DisFlex'>".$_GET['M']."</div>";} ?>

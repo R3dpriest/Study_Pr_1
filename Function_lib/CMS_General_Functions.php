@@ -1,4 +1,4 @@
-<?PHP 
+<?PHP
 function LoadPrevPage($Msge){
 	if(isset($Msge)){
 		$Ex = '?Msg=';

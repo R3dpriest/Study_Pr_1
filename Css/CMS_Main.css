@@ -1,4 +1,4 @@
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce){
     .CMS_Menu_But .CMS_Menu_Line, .CMS_Menu_But::before, .CMS_Menu_But::after,
     .CMS_side_menu, .CMS_Nav_overlay { transition: none !important; }
 }

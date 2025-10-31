@@ -8,7 +8,7 @@
 .CMS_Cal_Cal_Container{aspect-ratio: 1 / 0.47; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
 .CMS_Cal_Grid{display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;}
 .CMS_Cal_Date{margin: 1px; padding: 2px; background-color: var(--Co5); display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 3px; min-height: 25px; cursor: pointer;}
-
+ 
 .CMS_M_A{margin: auto;}
 
 .CMS_SL_N{list-style: none; min-height: 60px; margin-right: 20px; padding-inline-start: 5px;}

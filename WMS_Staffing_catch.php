@@ -17,5 +17,5 @@ try{
 	echo "Database error: " . $e->getMessage();
 }
  
-print_r($dataArray);*/
+print_r($dataArray);*/ 
 ?>

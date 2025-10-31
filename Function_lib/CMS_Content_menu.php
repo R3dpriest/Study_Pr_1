@@ -1,4 +1,4 @@
-<?PHP 
+<?PHP
 function CMS_GrabAllForms($Inp1){
 	global $GAF;
  	$GAF = "<select id='".$Inp1."' name='".$Inp1."'>";
