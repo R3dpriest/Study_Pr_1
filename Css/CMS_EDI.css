@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Cms Editor fields */
 .CMS_La_M{}
 .CMS_La_S{width: 49%; padding: 1px; margin-top: 3px;}
@@ -6,4 +7,14 @@
 
 .CMS_EDI_DateTab {padding-left: 3px}
 .CMS_EDI_DateTab li{border: 1px solid var(--Co1); margin: 3px; list-style-type: none; height: 3.5em;}
+=======
+/* Cms Editor fields */
+.CMS_La_M{}
+.CMS_La_S{width: 49%; padding: 1px; margin-top: 3px;}
+.CMS_La_S div{width: 49%; color: #ffeeee; padding: 1px;}
+.CMS_EDI_Sub{padding: 1px; }
+
+.CMS_EDI_DateTab {padding-left: 3px}
+.CMS_EDI_DateTab li{border: 1px solid var(--Co1); margin: 3px; list-style-type: none; height: 3.5em;}
+>>>>>>> 236a705ea03f897fdff7b98c7f9240fd984e414b
 .ui-state-highlight{border: 2px dotted var(--Co2) !important; }

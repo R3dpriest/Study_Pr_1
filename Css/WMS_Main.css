@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .WMS_Cal_Container{margin: 10px 0px 10px 10px;}
 .WMS_Cal_Top{width: 98vw; margin-right: 5px;}
 .WMS_Cal_TLeft{padding: 2px;}
@@ -91,4 +92,99 @@
 .calendar-date:hover {
   background-color: #e0f7fa;
   cursor: pointer;
+=======
+.WMS_Cal_Container{margin: 10px 0px 10px 10px;}
+.WMS_Cal_Top{width: 98vw; margin-right: 5px;}
+.WMS_Cal_TLeft{padding: 2px;}
+.WMS_Cal_TRight{width: 30vw; min-width: 300px; flex-shrink: 0; padding: 2px;}
+.WMS_Cal_Bot{}
+.WMS_Cal_BLeft{}
+.WMS_Cal_BRight{}
+.CMS_Cal_Cal_Container{aspect-ratio: 1 / 0.47; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+.CMS_Cal_Grid{display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;}
+.CMS_Cal_Date{margin: 1px; padding: 2px; background-color: var(--Co5); display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 3px; min-height: 25px; cursor: pointer;}
+
+.CMS_M_A{margin: auto;}
+
+.CMS_SL_N{list-style: none; min-height: 60px; margin-right: 20px; padding-inline-start: 5px;}
+
+.CMS_Cu_Gr{cursor: Grab;}
+.CMS_SL_N li{margin: 2px; padding: 6px 10px; background-color: var(--Co5); border: 1px var(--Co4); border-radius: 3px;}
+.CMS_SL_N li div{display: flex; justify-content: space-between;}
+.CMS_SL_N li div div select{background: var(--Co5); border: 1px solid var(--Co4); padding: 1.5px;}
+.CMS_SL_N li div div button{background: var(--Co5); border: 1px solid var(--Co4); padding: 1.5px; color: var(--Co1); width: 23px;}
+.WMS_So_Place {
+      background-color: var(--bg2) !important;
+      border: 2px dashed var(--Co2) !important;
+      height: 30px;
+      margin: 5px 0 !important; 
+    }
+
+/*    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .CMS_Cal_Container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .CMS_Cal_Top {
+      display: flex;
+      flex: 8;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    .CMS_Cal_Ros {
+      flex: 4;
+      border: 1px solid #ccc;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    .CMS_Cal_Ros .CMS_Mo_drop-zone {
+      min-height: 200px;
+      border: 2px dashed #aaa;
+      padding: 10px;
+    }
+
+    .CMS_Cal_Right {
+      flex: 1.5;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .locations, .agenda {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .CMS_Cal_Bot {
+      display: flex;
+      flex: 2;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    .staff{
+      flex: 1;
+      border: 1px solid #ccc;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+.CMS_Cal_Sta{cursor: grab;}
+.CMS_Cal_Sta.dragging{opacity: 0.5;}
+
+
+
+
+.calendar-date:hover {
+  background-color: #e0f7fa;
+  cursor: pointer;
+>>>>>>> 236a705ea03f897fdff7b98c7f9240fd984e414b
 }/*

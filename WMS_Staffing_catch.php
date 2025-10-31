@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?PHP
 $WMS_Update = file_get_contents('php://input');
 $WMS_Update_decoded = json_decode($WMS_Update, true);
@@ -19,3 +20,6 @@ try{
  
 print_r($dataArray);*/
 ?>
+=======
+<?PHP print_r($_POST); ?>
+>>>>>>> 236a705ea03f897fdff7b98c7f9240fd984e414b
