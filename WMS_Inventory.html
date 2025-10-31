@@ -1,0 +1,122 @@
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="../CMS/Javascript/CMS_General.js" defer></script>
+	<script src="../CMS/Javascript/CMS_Basic_Account.js" defer></script>
+	<link rel="stylesheet" href="../CMS/Css/CMS_Main.css">
+	<title>WMS - Inventory</title>
+</head>
+<body>
+<!--
+include_once __dir__ ".\CMS_Content_menu.php";
+GrabAllLocations("Location"); --!>
+
+
+<div class="WMS_Tile_container">
+	<div class="WMS_Tile_Content"><h2>Amsterdam - North<h2></div>
+	<div class="CMS_DisFlex">
+		<div class="WMS_Tile_Content CMS_DisBox CMS_FlNstr"><h2>Location<h2>
+		<select><option>Example</option><option>Example</option><option>Example</option></select></div>
+		<div class="WMS_Tile_Content CMS_DisBox">
+			<h2>General information<h2>
+			<table class="WMS_Ing_list" id="WMS_Ing_list">
+				<thead>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Staff (volenteers)</td>
+						<td>1</td>
+						<td><a href="WMS_Inventory" target="_SELF">ℹ️</a></td>
+					</tr>
+					<tr>
+						<td>Clients</td>
+						<td>2</td>
+						<td><a href="WMS_Inventory" target="_SELF">ℹ️</a></td>
+					</tr>
+					<tr>
+						<td>Vegetarians</td>
+						<td>1</td>
+						<td><a href="WMS_Inventory" target="_SELF">ℹ️</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="WMS_Tile_Content">
+		<h2>Inventory</h2>
+		<div class="WMS_Table_Container">
+			<table class="WMS_Ing_list">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Stockpile (current)</th>
+						<th>Stockpile (previous)</th>
+						<th>Last shipment</th>
+						<th>Sheflife</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Tomato</td>
+						<td>102</td>
+						<td>194</td>
+						<td>30-9-2025</td>
+						<td>2 weeks</td>
+						<td><a href="WMS_Inventory" target="_SELF">📦 Transfer</a></td>
+					</tr>
+					<tr>
+						<td>Bread</td>
+						<td>40</td>
+						<td>36</td>
+						<td>30-9-2025</td>
+						<td>1 weeks</td>
+						<td><a href="WMS_Inventory" target="_SELF">📦 Transfer</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="CMS_DisFlex">
+		<div class="WMS_Tile_Content CMS_DisBox CMS_FlNstr">
+		<h2>Options<h2>
+		<select><option>Donations</option><option>Processed</option><option>Transferred</option></select>
+		<button class="CMS_But">Audit</button>
+		</div>
+		<div class="WMS_Tile_Content CMS_DisBox">
+			<table class="WMS_Ing_list">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Shipping ID</th>
+						<th>Volume</th>
+						<th>Pledged</th>
+						<th>Arrival</th>
+						<th>Arrived</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>186</td>
+						<td>53</td>
+						<td>100</td>
+						<td>30-9-2025</td>
+						<td>30-9-2025</td>
+						<td>true</td>
+					</tr>
+					<tr>
+						<td>152</td>
+						<td>43</td>
+						<td>94</td>
+						<td>29-9-2025</td>
+						<td>29-9-2025</td>
+						<td>true</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
