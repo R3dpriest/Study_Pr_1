@@ -576,7 +576,7 @@ CREATE TABLE WMS_Roster (
 	FOREIGN KEY (role_id) REFERENCES WMS_Roles(id) ON DELETE CASCADE,
 	FOREIGN KEY (prof_id) REFERENCES Prof_users(id) ON DELETE CASCADE,
 	FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE,
-	ADD UNIQUE KEY WMS_Roster_constraiant (weeks_id, role_id, prof_id);
+	UNIQUE KEY WMS_Roster_constraint (weeks_id, role_id, prof_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE Prof_profiles ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES Prof_Users(id) ON DELETE CASCADE;
