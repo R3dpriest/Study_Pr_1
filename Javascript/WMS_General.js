@@ -74,7 +74,19 @@ function CMS_Cal_Gen(date) {
 	for(let i = 0; i < startDay; i++){ $CMS_Cal_Grid.append($('<div>'));}
 	for(let d = 1; d <= lastDay.getDate(); d++){
 		const fullDate = new Date(year, month, d);	const mysqlDate = fullDate.toISOString().split('T')[0];
-		const $dateElem = $('<div>').addClass('CMS_Cal_Date').text(d).on('click', function(){	alert("Selected MySQL Date: " + mysqlDate); });
+		const $dateElem = $('<div>').addClass('CMS_Cal_Date').text(d).on('click', function(){
+			// https://www.w3schools.com/jsref/jsref_encodeURIComponent.asp
+			const WMS_BASE_URL = new URL(window.location.href);
+			const WMS_BASE_URL_PART = WMS_BASE_URL.origin + WMS_BASE_URL.pathname;
+			const WMS_BASE_URL_L = WMS_BASE_URL.searchParams.get('L');
+			let WMS_NEW_URL = WMS_BASE_URL_PART;
+			if(WMS_BASE_URL_L !== null){
+				WMS_NEW_URL += '?L=' + encodeURIComponent(WMS_BASE_URL_L) + '&X=' + encodeURIComponent(mysqlDate);
+			} else {
+				WMS_NEW_URL += '?X=' + encodeURIComponent(mysqlDate);
+			}
+			window.location.href = WMS_NEW_URL;
+		});
 		$CMS_Cal_Grid.append($dateElem);
 	}
 	$CMS_Mo_Ye.text(firstDay.toLocaleString('default', { month: 'long' }) + ' ' + year);
@@ -89,7 +101,6 @@ function CMS_Cal_WeNr(d){	d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d
 
 $(function(){$(".WMS_Cal_Sort").sortable({ connectWith: ".WMS_Cal_Sort", placeholder: "WMS_So_Place" }).disableSelection();});
 
-const WMS_SelWeek = 0;
 const WMS_Days = {mon: '#WMS_Mon', tue: '#WMS_Tue', wed: '#WMS_Wed', thu: '#WMS_Thu', fri: '#WMS_Fri', sat: '#WMS_Sat', sun: '#WMS_Sun'};
 function WMS_Roster_Array(){
 	const Entry_Data = [];
@@ -137,6 +148,7 @@ function WMS_Roster_Array(){
 		console.error('AJAX error:', status, error);
 		}
 	});
+	console.log(WMS_PassArray);
 	  return WMS_PassArray;
 //return Object.keys(WMS_unique).map(function(k) {  return WMS_unique[k]; });
 }
