@@ -147,7 +147,7 @@ function CMS_Log_Auto(){
 		if($CMS_Cookie && strpos($CMS_Cookie, ':') !== false){
 			[$CMS_tok_selector, $CMS_tok_tok] = explode(':', $CMS_Cookie, 2);
 			if(!ctype_xdigit($CMS_tok_selector) || !ctype_xdigit($CMS_tok_tok)){ return;
-			} else {  echo $CMS_tok_selector;
+			} else { // echo $CMS_tok_selector;
 				$CMS_tok_AL1 = "SELECT id, prof_id, tok_hash, tok_usera_hash, tok_expires, tok_revoked FROM Prof_Login_Handle WHERE tok_selector = :tok_selector LIMIT 1";
 				$CMS_tok_AL2 = $GLOBALS["SQL_Con"]->prepare($CMS_tok_AL1);
 				$CMS_tok_AL2->execute([':tok_selector' => $CMS_tok_selector]);
@@ -161,21 +161,23 @@ function CMS_Log_Auto(){
 						setcookie('CMS_Remember_me', '', ['expires' => time() - 3600, 'path' => '/', 'secure' => true, 'httponly' => true, 'samesite' => 'Lax']);
 						return;					
 					}
-					if($NM_chk){ echo "marco";
-						if(!$UA_chk){
-							//strictmode
-							return;
-						}
-						session_regenerate_id(true);
-						CMS_Log_Auth();
-						$CMS_tok_ntok = bin2hex(random_bytes(32));
-						$CMS_tok_nhash = hash('sha256', $CMS_tok_tok);
-						$CMS_tok_AL_upd1 = "UPDATE Prof_Login_Handle SET tok_hash = :tok_hash, tok_last_use = NOW() WHERE id = :id";
-						$CMS_tok_AL_upd2 = $GLOBALS["SQL_Con"]->prepare($CMS_tok_AL_upd1);
-						$CMS_tok_AL_upd2->execute([':id' => $CMS_tok_AL3['id'], ':tok_hash' => $CMS_tok_nhash]);
-						$CMS_Val = $CMS_tok_selector . ':' . $CMS_tok_ntok;
-						$CMS_Param = ['expires' => time() + 60 * 60 * 24 * 30, 'path' => '/', 'domain' => $GLOBALS['Domain'], 'secure'   => true, 'httponly' => true, 'samesite' => 'Lax', ];
-						setcookie('CMS_Remember_me', $CMS_Val, $CMS_Param);
+					if(isset($NM_chk)){
+						if($NM_chk){
+							if(!$UA_chk){
+									//strictmode
+									return;
+								}
+								session_regenerate_id(true);
+								CMS_Log_Auth();
+								$CMS_tok_ntok = bin2hex(random_bytes(32));
+								$CMS_tok_nhash = hash('sha256', $CMS_tok_tok);
+								$CMS_tok_AL_upd1 = "UPDATE Prof_Login_Handle SET tok_hash = :tok_hash, tok_last_use = NOW() WHERE id = :id";
+								$CMS_tok_AL_upd2 = $GLOBALS["SQL_Con"]->prepare($CMS_tok_AL_upd1);
+								$CMS_tok_AL_upd2->execute([':id' => $CMS_tok_AL3['id'], ':tok_hash' => $CMS_tok_nhash]);
+								$CMS_Val = $CMS_tok_selector . ':' . $CMS_tok_ntok;
+								$CMS_Param = ['expires' => time() + 60 * 60 * 24 * 30, 'path' => '/', 'domain' => $GLOBALS['Domain'], 'secure'   => true, 'httponly' => true, 'samesite' => 'Lax', ];
+								setcookie('CMS_Remember_me', $CMS_Val, $CMS_Param);
+						} else { return; }
 					} else { return; }
 				} else { return; }
 			}

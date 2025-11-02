@@ -8,7 +8,23 @@
 .CMS_Cal_Cal_Container{aspect-ratio: 1 / 0.47; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
 .CMS_Cal_Grid{display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;}
 .CMS_Cal_Date{margin: 1px; padding: 2px; background-color: var(--Co5); display: flex; justify-content: center; align-items: center; text-align: center; border-radius: 3px; min-height: 25px; cursor: pointer;}
- 
+
+.WMS_G_I_Container { display: flex; flex-wrap: wrap; gap: 16px; }
+.WMS_G_I_Container > div { flex: 1 1 300px; box-sizing: border-box; padding: 8px; }
+.WMS_G_I_Container > div > div { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-start; }
+.WMS_G_I_Row { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; min-width: 120px; max-width: 100%; box-sizing: border-box; }
+.WMS_G_I_Row > div:first-child { white-space: nowrap; flex: 0 0 auto; font-weight: 600; min-width: 130px;}
+.WMS_G_I_Row > div:last-child { flex: 0 0 auto; white-space: nowrap; text-align: right; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 480px) {
+  .WMS_G_I_Container > div { flex: 1 1 100%; }
+  .WMS_G_I_Container > div > div { gap: 8px; }
+  .WMS_G_I_Row { flex: 1 1 100%; min-width: 0; }
+  .WMS_G_I_Row > div:last-child { white-space: normal; text-align: left; }
+}
+
+
+
+
 .CMS_M_A{margin: auto;}
 
 .CMS_SL_N{list-style: none; min-height: 60px; margin-right: 20px; padding-inline-start: 5px;}

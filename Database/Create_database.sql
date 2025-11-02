@@ -280,12 +280,12 @@ INSERT INTO CMS_Translations_Other (id, lang_id, handle_tag, page_id, text) VALU
 (0, 0, 'WMS_inv_sta_1', 2, 'Staff (volenteers)'),
 (1, 0, 'WMS_inv_sta_2', 2, 'Clients'),
 (2, 0, 'WMS_inv_sta_3', 2, 'Vegetarians'),
-(3, 0, 'WMS_inv_sto_1', 2, 'Stockpile (current)'),
-(4, 0, 'WMS_inv_sto_2', 2, 'Stockpile (previous)'),
-(5, 0, 'WMS_inv_sto_3', 2, 'Last shipment'),
-(6, 0, 'WMS_inv_sto_4', 2, 'shelf-life'),
-(7, 0, 'WMS_inv_sto_5', 2, 'Options'),
-(8, 0, 'WMS_inv_sto_6', 2, '📦 Transfer'),
+(3, 0, 'WMS_inv_sta_1', 2, 'Stockpile (current)'),
+(4, 0, 'WMS_inv_sta_2', 2, 'Stockpile (previous)'),
+(5, 0, 'WMS_inv_sta_3', 2, 'Last shipment'),
+(6, 0, 'WMS_inv_sta_4', 2, 'shelf-life'),
+(7, 0, 'WMS_inv_sta_5', 2, 'Options'),
+(8, 0, 'WMS_inv_sta_6', 2, '📦 Transfer'),
 (9, 0, 'CMS_Log_USR', 5, 'Username'),
 (10, 0, 'CMS_Log_EMA', 5, 'Email'),
 (11, 0, 'CMS_Log_PSW', 5, 'Password'),
@@ -318,7 +318,14 @@ INSERT INTO CMS_Translations_Other (id, lang_id, handle_tag, page_id, text) VALU
 (38, 0, 'CMS_Pro_CIT', 8, 'City'),
 (39, 0, 'CMS_Pro_PHO', 8, 'Phone Number'),
 (40, 0, 'CMS_Pro_VEG', 8, 'Vegetarian'),
-(41, 0, 'CMS_Pro_DEF', 8, 'Location');
+(41, 0, 'CMS_Pro_DEF', 8, 'Location'),
+(42, 0, 'WMS_inv_sta_7', 2, 'Donors'),
+(43, 0, 'WMS_inv_sta_8', 2, 'First contact'),
+(44, 0, 'WMS_inv_sta_9', 2, 'Second contact'),
+(45, 0, 'WMS_inv_sta_10', 2, 'City'),
+(46, 0, 'WMS_inv_sta_11', 2, 'Street'),
+(47, 0, 'WMS_inv_sta_12', 2, 'Zip-code'),
+(48, 0, 'WMS_inv_sta_13', 2, 'Name');
 
 -- CMS_content_raw
 CREATE TABLE CMS_content_raw (
@@ -329,7 +336,7 @@ CREATE TABLE CMS_content_raw (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO CMS_content_raw (id, content, description) VALUES
-(0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Example text'),
+(0, "<h2>Welcome to the beta-website of the food bank</h2><br>I would like to welcome you on our new food bank website.<br> We are a collective of foodbank's throughout the Netherlands.<br> Our primary goal is to make sure that no one goes hungry in our fine community.<br>It is safe to say that we declare war on hunger and we, the volenteers in comibation with the donors both big and small are in the trenches and are taking the fight to hunger itself.<br><br><h3>Need help</h3>The truth is that bad luck can befall anyone and that hunger is unpleasant for everyone. So we welcome everyone that goes hungry to <a href='CMS_Login.php'>make an account</a> and apply for the support today.<br>While we promise not to judge you, we do have to go through the application process, because we want to make sure that there is enough food for those that really need it.<br><h3>Want to help?</h3>Do you wish to help yourself?<br> Do you feel the calling yourself?<br> Either by volenteering in one of our fine locations or making financial or physical donation?<br> Either contact the location close to you, or follow the same process by <a href='CMS_Login.php'>making an account</a>.<br><br><img class='CMS_FR_IM' src='images\Generic_Foodbank_Image.jpeg' placeholder='Food for everyone'><br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> <i>Please note: This is a non-profit organization and does this out of good will and kinddness. We would therefor request that you do not hassle our volenteers.</i>", 'Example text'),
 (1, '&lt;h1&gt;CMS - Form generator&lt;/h2&gt;&lt;br&gt;Please use the form below to create new forms.', 'CMS - Form - Header'),
 (2, 'Welcome at the foodbank.\n This is our newest foodbank page.', 'Index welcome page');
 

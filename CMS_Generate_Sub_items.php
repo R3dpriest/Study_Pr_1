@@ -15,7 +15,7 @@ function CMS_Content_Generation($Page){
 				$CMS_Content2b = $SQL_Con->prepare($CMS_Content2a);
 				$CMS_Content2b->execute([':CMS_C_id' => $CMS_L1['Content_id']]);
 				$CMS_Content2c = $CMS_Content2b->fetch(PDO::FETCH_ASSOC);
-				echo htmlentities($CMS_Content2c['content']);
+				echo $CMS_Content2c['content'];
 				break;
 			case 1:
 				$CMS_Content3a = "SELECT * FROM CMS_Forms WHERE id = :CMS_C_id";
