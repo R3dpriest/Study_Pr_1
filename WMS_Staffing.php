@@ -59,11 +59,12 @@ if(isset($_GET['X'])){
 	$WMS_Gr_Week2->execute([':date' => $_GET['X']]);
 	$WMS_Gr_Week3 = $WMS_Gr_Week2->fetch(PDO::FETCH_ASSOC);
 } else {
-	$WMS_Gr_Week1 = "SELECT id FROM wms_weeks WHERE NOW() BETWEEN start_date AND end_date;";
+	$WMS_Gr_Week1 = "SELECT id FROM wms_weeks WHERE DATE_FORMAT(NOW(), '%Y-%m-%d') BETWEEN start_date AND end_date;";
 	$WMS_Gr_Week2 = $GLOBALS['SQL_Con']->prepare($WMS_Gr_Week1);
 	$WMS_Gr_Week2->execute();
 	$WMS_Gr_Week3 = $WMS_Gr_Week2->fetch(PDO::FETCH_ASSOC);
 }
+
 echo "<Script> const Param = new URLSearchParams(window.location.search);
 const URLParse = new URLSearchParams(window.location.search);
 const URLParse_L = URLParse.get('L');

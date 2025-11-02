@@ -184,6 +184,7 @@ h2{margin-top: 3px; margin-bottom: 3px;}
 .CMS_ER_I{ width: 50%; height: auto;}
 .CMS_St_bc{ border: 2px solid var(--Co1); background-color: var(--Co5); border-radius: 4px;}
 .CMS_Gen_BG{}
+.CMS_FR_IM{width: 475px; height: 315px;}
 
 /* WMS */
 .WMS_Tile_container{ padding: 4px;}
