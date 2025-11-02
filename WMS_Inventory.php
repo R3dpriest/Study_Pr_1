@@ -4,7 +4,7 @@
 if(isset($_GET['L'])){ $Loc_id = $_GET['L']; } else { $Loc_id = $_SESSION['CMS_7']; }
 	
 //$WMS_SQL_LocData1a = "SELECT wml.id, wml.loc_name, wml.loc_zipcode, wml.loc_city, wml.loc_street, wml.loc_1e_contact_id, wml.loc_2e_contact_id, wml.loc_enabled, pru2.username AS contact_1_user, pru3.username AS contact_2_user, COUNT(prp.donor) AS donor_nr, COUNT(prp.vegetarian) AS vegetarian_nr, COUNT(prp.staff) AS staff_nr, COUNT(prp.client) AS client_nr FROM wms_locations wml LEFT JOIN prof_profiles prp ON prp.loc_id = wml.id LEFT JOIN Prof_Users pru2 ON pru2.id = wml.loc_1e_contact_id LEFT JOIN Prof_Users pru3 ON pru3.id = wml.loc_2e_contact_id LEFT JOIN Prof_Users pru ON prp.users_id = pru.id WHERE wml.id = :loc_id AND pru.enabled = true;";
-$WMS_SQL_LocData1a = "SELECT wml.id, wml.loc_name, wml.loc_zipcode, wml.loc_city, wml.loc_street, wml.loc_1e_contact_id, wml.loc_2e_contact_id, wml.loc_enabled, pru2.username AS contact_1_user, pru3.username AS contact_2_user, SUM(CASE WHEN prp.donor = 1 THEN 1 ELSE 0 END) AS donor_nr, SUM(CASE WHEN prp.vegetarian = 1 THEN 1 ELSE 0 END) AS vegetarian_nr, SUM(CASE WHEN prp.staff = 1 THEN 1 ELSE 0 END) AS staff_nr, SUM(CASE WHEN prp.client = 1 THEN 1 ELSE 0 END) AS client_nr FROM wms_locations wml LEFT JOIN prof_profiles prp ON prp.loc_id = wml.id LEFT JOIN Prof_Users pru2 ON pru2.id = wml.loc_1e_contact_id LEFT JOIN Prof_Users pru3 ON pru3.id = wml.loc_2e_contact_id LEFT JOIN Prof_Users pru ON prp.users_id = pru.id WHERE wml.id = :loc_id GROUP BY wml.id, wml.loc_name, wml.loc_zipcode, wml.loc_city, wml.loc_street, wml.loc_1e_contact_id, wml.loc_2e_contact_id, wml.loc_enabled, pru2.username, pru3.username;";
+$WMS_SQL_LocData1a = "SELECT wml.id, wml.loc_name, wml.loc_zipcode, wml.loc_city, wml.loc_street, wml.loc_1e_contact_id, wml.loc_2e_contact_id, wml.loc_enabled, pru2.username AS contact_1_user, pru3.username AS contact_2_user, SUM(CASE WHEN prp.donor = 1 THEN 1 ELSE 0 END) AS donor_nr, SUM(CASE WHEN prp.vegetarian = 1 THEN 1 ELSE 0 END) AS vegetarian_nr, SUM(CASE WHEN prp.staff = 1 THEN 1 ELSE 0 END) AS staff_nr, SUM(CASE WHEN prp.client = 1 THEN 1 ELSE 0 END) AS client_nr FROM wms_locations wml LEFT JOIN prof_profiles prp ON prp.loc_id = wml.id LEFT JOIN prof_users pru2 ON pru2.id = wml.loc_1e_contact_id LEFT JOIN prof_users pru3 ON pru3.id = wml.loc_2e_contact_id LEFT JOIN prof_users pru ON prp.users_id = pru.id WHERE wml.id = :loc_id GROUP BY wml.id, wml.loc_name, wml.loc_zipcode, wml.loc_city, wml.loc_street, wml.loc_1e_contact_id, wml.loc_2e_contact_id, wml.loc_enabled, pru2.username, pru3.username;";
 $WMS_SQL_Locdata1b = $GLOBALS['SQL_Con']->prepare($WMS_SQL_LocData1a);
 $WMS_SQL_Locdata1b->execute(['loc_id' => $Loc_id]);
 $WMS_SQL_Locdata1c = $WMS_SQL_Locdata1b->fetch(PDO::FETCH_ASSOC);
@@ -90,12 +90,6 @@ echo '<script src="Javascript/WMS_General.js" defer></script>';
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
 
 <? PHP
 include_once __dir__ . "CMS_Footer.php"; ?>

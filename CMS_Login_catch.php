@@ -24,7 +24,7 @@ class CMS_Validation {
 //Functions 
 function CMS_IsolateLanguage($RiId){
 	
-	$CMS_Qry3a  = 'SELECT right_id FROM Prof_right_profiles WHERE right_names_id = :right_names_id';
+	$CMS_Qry3a  = 'SELECT right_id FROM prof_right_profiles WHERE right_names_id = :right_names_id';
 	$CMS_Qry3b = $GLOBALS["SQL_Con"]->prepare($CMS_Qry3a);
 	$CMS_Qry3b->execute([':right_names_id' => $RiId]);
 	$CMS_Qry3c = $CMS_Qry3b->fetchAll();
@@ -75,12 +75,12 @@ if($_GET['Q'] == 2){
 	if(!strlen($Pw11) == 0 || !strlen($Pw21) == 0 || !strlen($Usr1) == 0 || !strlen($Mai1) == 0) {
 		//username
 		if(!preg_match($CMS_Validator->CMS_Username, $Usr1)){ array_push($Error, "Only letters A–Z allowed."); $E++;}
-		$CMS_Qry1a = "SELECT COUNT(*) AS total FROM Prof_Users WHERE username = :PDO_username";
+		$CMS_Qry1a = "SELECT COUNT(*) AS total FROM prof_users WHERE username = :PDO_username";
 		$CMS_Qry1b = $SQL_Con->prepare($CMS_Qry1a);
 		$CMS_Qry1b->execute([':PDO_username' => $Usr1]);
 		$CMS_Qry1_count = $CMS_Qry1b->fetchColumn();
 		if($CMS_Qry1_count !== 0){array_push($Error, $CMS_ExTrans3['CMS_Log_0Au']); $E++;}
-		$CMS_Qry2a = "SELECT COUNT(*) AS total FROM Prof_Users WHERE email = :PDO_email";
+		$CMS_Qry2a = "SELECT COUNT(*) AS total FROM prof_users WHERE email = :PDO_email";
 		$CMS_Qry2b = $SQL_Con->prepare($CMS_Qry2a);
 		$CMS_Qry2b->execute([':PDO_email' => $Mai1]);
 		$CMS_Qry2_count = $CMS_Qry2b->fetchColumn();
@@ -107,10 +107,10 @@ if($_GET['Q'] == 2){
 		$PwHs = password_hash($Pw11, PASSWORD_DEFAULT, ['cost' => 12]);
 		//Create Basic Account
 		$Default_Prof = 2;
-		$CMS_Ins1a = "INSERT INTO Prof_Users (username, email, hashed_password, right_names_id, enabled) VALUES (:PDO_username, :PDO_email, :PDO_password, :PDO_DefRi, 1)";
+		$CMS_Ins1a = "INSERT INTO prof_users (username, email, hashed_password, right_names_id, enabled) VALUES (:PDO_username, :PDO_email, :PDO_password, :PDO_DefRi, 1)";
 		$CMS_Ins1b = $SQL_Con->prepare($CMS_Ins1a);
 		$CMS_Ins1b->execute([':PDO_username' => $Usr1, ':PDO_email' => $Mai1, ':PDO_password' => $PwHs, ':PDO_DefRi' => $Default_Prof]);
-		$CMS_Ins2a = "SELECT id FROM Prof_Users WHERE username = :PDO_username";
+		$CMS_Ins2a = "SELECT id FROM prof_users WHERE username = :PDO_username";
 		$CMS_Ins2b = $SQL_Con->prepare($CMS_Ins2a);
 		$CMS_Ins2b->execute([':PDO_username' => $Usr1]);
 		$CMS_Ins2c = $CMS_Ins2b->fetch(PDO::FETCH_ASSOC);

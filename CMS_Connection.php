@@ -11,7 +11,7 @@ $SQL_Password = "i572944";
 $SQL_Server = "localhost";
 $SQL_Username = "Admin";
 $SQL_Password = "i572944";
-$SQL_DB1 = "NGO_Foodbank";
+$SQL_DB1 = "ngo_foodbank";
 
 try { 
 	$SQL_Con = new PDO("mysql:host=$SQL_Server;dbname=$SQL_DB1;charset=utf8mb4", $SQL_Username, $SQL_Password);

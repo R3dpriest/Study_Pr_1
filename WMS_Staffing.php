@@ -71,7 +71,7 @@ const URLParse_L = URLParse.get('L');
 if (URLParse_L !== null && URLParse_L !== ''){ window.loc_id = URLParse_L; } else { window.loc_id = ".$_SESSION['CMS_7']."; } window.WMS_SelWeek = ".$WMS_Gr_Week3['id']." ; </script> ";
 echo '<script src="Javascript/WMS_General.js" defer></script>';
 /*$WMS_QRY1a = "SELECT WS.day_mon, WS.day_tue, WS.day_wed, WS.day_thu, WS.day_fri, WS.day_sat, WS.day_sun, WR.id AS role_id, WR.name AS role_name, PU.id AS user_id, PU.username, PP.date_gone_start, PP.date_gone_end, PP.first_name, PP.last_name, PP.roles_id, PT.start_TiO, PT.end_TiO FROM Prof_Users PU JOIN Prof_Time_off PT JOIN Prof_profiles PP JOIN WMS_Roles WR JOIN WMS_Roster WS WHERE WS.loc_id = PP.loc_id AND PP.loc_ID = :loc_id AND PU.enabled = true AND PP.staff = true"; */
-$WMS_QRY1a = "SELECT PU.id AS user_id, PU.username, PP.first_name, PP.last_name, PP.date_gone_start, PP.date_gone_end, pp.roles_id, WR.id AS role_id, WR.name AS role_name FROM Prof_profiles PP LEFT JOIN prof_users PU ON PU.id = PP.users_id LEFT JOIN WMS_Locations WL ON PP.loc_id = WL.id LEFT JOIN WMS_Roles WR ON WR.id = PP.roles_id WHERE PU.enabled = TRUE AND PP.staff = TRUE AND PP.loc_id =  :loc_id; ";
+$WMS_QRY1a = "SELECT PU.id AS user_id, PU.username, PP.first_name, PP.last_name, PP.date_gone_start, PP.date_gone_end, pp.roles_id, WR.id AS role_id, WR.name AS role_name FROM prof_profiles PP LEFT JOIN prof_users PU ON PU.id = PP.users_id LEFT JOIN wms_locations WL ON PP.loc_id = WL.id LEFT JOIN wms_roles WR ON WR.id = PP.roles_id WHERE PU.enabled = TRUE AND PP.staff = TRUE AND PP.loc_id =  :loc_id; ";
 $WMS_QRY1b = $GLOBALS['SQL_Con']->prepare($WMS_QRY1a);
 $WMS_QRY1b->execute([':loc_id' => $CMS_Target]);
 $WMS_QRY1c = $WMS_QRY1b->fetchAll(PDO::FETCH_ASSOC);
@@ -82,7 +82,7 @@ foreach ($WMS_QRY1c as $ReIndex) {
 	array_push($CSY, $ReIndex['user_id']);
 }
 
-$WMS_QRY2a = "SELECT * FROM WMS_Roster WHERE loc_id = :loc_id AND weeks_id = :week";
+$WMS_QRY2a = "SELECT * FROM wms_roster WHERE loc_id = :loc_id AND weeks_id = :week";
 $WMS_QRY2b = $GLOBALS['SQL_Con']->prepare($WMS_QRY2a);
 $WMS_QRY2b->execute([':loc_id' => $CMS_Target, ':week' => $WMS_Gr_Week3['id']]);
 $WMS_QRY2c = $WMS_QRY2b->fetchAll(PDO::FETCH_ASSOC);

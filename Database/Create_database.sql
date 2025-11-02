@@ -2,13 +2,13 @@ SET @old_sql_mode = @@SESSION.sql_mode;
 SET @@SESSION.sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
  
 -- Prof_right_names
-CREATE TABLE Prof_right_names (
+CREATE TABLE prof_right_names (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(40) NOT NULL,
     description VARCHAR(255) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO Prof_right_names (id, name, description) VALUES
+INSERT INTO prof_right_names (id, name, description) VALUES
 (0, 'not logged in', 'This user is not logged in.'),
 (1, 'Global Admin', 'This user has full access.'),
 (2, 'User account', 'Default user.'),
@@ -16,13 +16,13 @@ INSERT INTO Prof_right_names (id, name, description) VALUES
 (4, 'WMS Staffer', 'Warehouse User');
 
 -- Prof_Rights
-CREATE TABLE Prof_Rights (
+CREATE TABLE prof_Rights (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(20) NOT NULL,
     description VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO Prof_Rights (id, title, description) VALUES
+INSERT INTO prof_Rights (id, title, description) VALUES
 (0, 'Read All', 'Generic read tag'),
 (1, 'Read CMS', 'This user can view CMS content.'),
 (2, 'Write CMS', 'This user can alter CMS content.'),
@@ -36,7 +36,7 @@ INSERT INTO Prof_Rights (id, title, description) VALUES
 (10, 'Staffing', 'WMS - staffing page');
 
 -- Prof_Users GlobalAdmin F0()dB&nkPw GenericUser G3ner!cPassword
-CREATE TABLE Prof_Users (
+CREATE TABLE prof_Users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -44,10 +44,10 @@ CREATE TABLE Prof_Users (
     right_names_id INT NOT NULL,
     enabled BOOLEAN NOT NULL DEFAULT FALSE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (right_names_id) REFERENCES Prof_right_names(id) ON DELETE CASCADE
+    FOREIGN KEY (right_names_id) REFERENCES prof_right_names(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO Prof_Users (id, username, email, hashed_password, right_names_id, enabled) VALUES
+INSERT INTO prof_Users (id, username, email, hashed_password, right_names_id, enabled) VALUES
 (0, 'GlobalAdmin', 'example@example.exe', '$2y$12$ZLR7WNC4MPxVsMlhQ2n5beL8y4UZqwX.dZmJTlRBZNGgTDgpsjTc6', 1, true), 
 (1, 'GenericUser', 'example@example.org', '$2y$12$sogk9IV7qHjevlL.gqRui.fKBazmvikbygxTM.ojcz/1RywcUJ7eq', 2, true),
 (2, 'Client1', 'example@example.no', '$2y$12$sogk9IV7qHjevlL.gqRui.fKBazmvikbygxTM.ojcz/1RywcUJ7eq', 2, true),
@@ -57,55 +57,54 @@ INSERT INTO Prof_Users (id, username, email, hashed_password, right_names_id, en
 (6, 'WMSUser3', 'example@example.fr', '$2y$12$sogk9IV7qHjevlL.gqRui.fKBazmvikbygxTM.ojcz/1RywcUJ7eq', 3, true),
 (7, 'WMSAdmin', 'example@example.be', '$2y$12$sogk9IV7qHjevlL.gqRui.fKBazmvikbygxTM.ojcz/1RywcUJ7eq', 4, true);
 
-CREATE TABLE Prof_Login_Handle (
+CREATE TABLE prof_login_handle (
 	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	prof_id INT NOT NULL,
 	tok_selector CHAR(16) NOT NULL, -- pubid
-	tok_hash CHAR(64) NOT NULL, 	-- SHA-256
+	tok_hash CHAR(64) NOT NULL,     -- SHA-256
 	tok_usera_hash CHAR(64) NULL,
 	tok_created DATETIME NOT NULL,
 	tok_expires DATETIME NOT NULL,
 	tok_last_use DATETIME NULL,
 	tok_revoked TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY uniq_selector (tok_selector),
-	FOREIGN KEY (prof_id) REFERENCES Prof_Users(id) ON DELETE CASCADE
+	FOREIGN KEY (prof_id) REFERENCES prof_users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- CMS_Lang
-CREATE TABLE CMS_Lang (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    lang_key VARCHAR(255) NOT NULL,
-    lang_description VARCHAR(150)
+-- cms_Lang
+CREATE TABLE cms_lang (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	lang_key VARCHAR(255) NOT NULL,
+	lang_description VARCHAR(150)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Lang (id, lang_key, lang_description) VALUES
+INSERT INTO cms_lang (id, lang_key, lang_description) VALUES
 (0, 'EN', 'English'),
 (1, 'NL', 'Nederlands'),
 (2, 'DE', 'German');
 
 -- Prof_profiles
-CREATE TABLE Prof_profiles (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    users_id INT NOT NULL,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    street VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    phone VARCHAR(20),
-    donor BOOLEAN DEFAULT FALSE,
-    client BOOLEAN DEFAULT FALSE,
-    staff BOOLEAN DEFAULT FALSE,
-    vegetarian BOOLEAN DEFAULT FALSE,
-    loc_id INT NOT NULL,
+CREATE TABLE prof_profiles (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	users_id INT NOT NULL,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100) NOT NULL,
+	street VARCHAR(255) NOT NULL,
+	city VARCHAR(255) NOT NULL,
+	phone VARCHAR(20),
+	donor BOOLEAN DEFAULT FALSE,
+	client BOOLEAN DEFAULT FALSE,
+	staff BOOLEAN DEFAULT FALSE,
+	vegetarian BOOLEAN DEFAULT FALSE,
+	loc_id INT NOT NULL,
 	lang_id INT NOT NULL,
 	roles_id INT NULL,
 	date_gone_start DATE NULL,
 	date_gone_end DATE NULL,
-	FOREIGN KEY (users_id) REFERENCES Prof_Users(id) ON DELETE CASCADE
+	FOREIGN KEY (users_id) REFERENCES prof_users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO Prof_profiles (id, users_id, first_name, last_name, street, city, phone, donor, client, staff, vegetarian, loc_id, lang_id, roles_id) VALUES
-(0, 0, 'Name', 'Namerson', 'Long Name Street', 'Short City', '1234123412', false, false, true, true, 0, 0 ,0),
+INSERT INTO prof_profiles (id, users_id, first_name, last_name, street, city, phone, donor, client, staff, vegetarian, loc_id, lang_id, roles_id) VALUES(0, 0, 'Name', 'Namerson', 'Long Name Street', 'Short City', '1234123412', false, false, true, true, 0, 0 ,0),
 (1, 1, 'Naam', 'Naamsen', 'lange Naam Laan', 'Korte Stad', '1234567890', true, false, false, true, 1, 0 ,1),
 (2, 2, 'Client 1', 'clientson', 'Long ClientName', 'ClientCity', '1231231230', false, true, false, true, 2, 0 ,2),
 (3, 3, 'Client 2', 'clientbar', 'Long StreetName', 'ClientCity', '1223164230', false, true, false, false, 2, 0 ,3),
@@ -115,7 +114,7 @@ INSERT INTO Prof_profiles (id, users_id, first_name, last_name, street, city, ph
 (7, 7, 'Angeline', 'Angelinerson', 'Long StreetName', 'ClientCity', '1223164230', false, false, true, false, 2, 0 ,3);
 
 -- Prof_right_profiles
-CREATE TABLE Prof_right_profiles (
+CREATE TABLE prof_right_profiles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     right_names_id INT NOT NULL,
     rights_id INT NOT NULL,
@@ -124,77 +123,77 @@ CREATE TABLE Prof_right_profiles (
     UNIQUE KEY unique_right_profile (rights_id, right_names_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO Prof_right_profiles (right_names_id, rights_id) VALUES
+INSERT INTO prof_right_profiles (right_names_id, rights_id) VALUES
 (0, 0), (0, 6),
 (1, 0), (1, 1), (1, 2), (1, 3), (1, 4),(1, 5),(1, 7), (1, 8), (1, 9), (1, 10),
 (2, 0), (2, 3),
 (3, 0), (3, 1), (3, 3), (3, 4), (3, 5), (3, 7), (3, 8), (3, 9), (3, 10),
 (4, 0), (4, 1), (4, 3), (4, 8);
 
--- CMS_Page_types
-CREATE TABLE CMS_Page_types (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    option_type VARCHAR(255) NOT NULL,
-    option_description VARCHAR(255) NOT NULL
+-- cms_Page_types
+CREATE TABLE cms_page_types (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	option_type VARCHAR(255) NOT NULL,
+	option_description VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Page_types (id, option_type, option_description) VALUES
+INSERT INTO cms_page_types (id, option_type, option_description) VALUES
 (0, 'Plain', 'Just plain text. Nothing else.'),
 (1, 'Code', 'Text, but this allows code'),
 (2, 'Form', 'This activates form logic.'),
 (3, 'Override', 'Prematurely exit the page generation.');
 
--- CMS_Pages
-CREATE TABLE CMS_Pages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    page_name VARCHAR(100) NOT NULL,
-    page_ext VARCHAR(50) NOT NULL,
+-- cms_Pages
+CREATE TABLE cms_pages (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	page_name VARCHAR(100) NOT NULL,
+	page_ext VARCHAR(50) NOT NULL,
 	page_opt VARCHAR(255) NOT NULL,
-    lang_id INT NOT NULL,
-    lang_Tx VARCHAR(3),
-    read_id INT DEFAULT 0,
-    read_write_id INT NOT NULL,
-    page_head VARCHAR(160) NOT NULL,
-    page_load_options ENUM('process', 'write', 'read', 'lock') NOT NULL DEFAULT 'process',
-    created_on DATETIME DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (read_id) REFERENCES Prof_Rights(id) ON DELETE CASCADE,
-	FOREIGN KEY (read_write_id) REFERENCES Prof_Rights(id) ON DELETE CASCADE,
-    FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_cms_page (lang_id, page_name, page_ext, page_opt)
+	lang_id INT NOT NULL,
+	lang_tx VARCHAR(3),
+	read_id INT DEFAULT 0,
+	read_write_id INT NOT NULL,
+	page_head VARCHAR(160) NOT NULL,
+	page_load_options ENUM('process', 'write', 'read', 'lock') NOT NULL DEFAULT 'process',
+	created_on DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (read_id) REFERENCES prof_rights(id) ON DELETE CASCADE,
+	FOREIGN KEY (read_write_id) REFERENCES prof_rights(id) ON DELETE CASCADE,
+	FOREIGN KEY (lang_id) REFERENCES cms_lang(id) ON DELETE CASCADE,
+	UNIQUE KEY unique_cms_page (lang_id, page_name, page_ext, page_opt)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Pages (id, page_name, page_ext, page_opt, lang_id, lang_Tx, read_id, read_write_id, page_head, page_load_options) VALUES
+INSERT INTO cms_pages (id, page_name, page_ext, page_opt, lang_id, lang_Tx, read_id, read_write_id, page_head, page_load_options) VALUES
 (0, 'Index', '.php', '', 0, 'EN', 0, 2, 'Welcome', 'process'),
-(1, 'CMS_EDI_For', '.php', '?Q=1', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
-(2, 'WMS_Inventory', '.php', '', 0, 'EN', 4, 5, 'WMS - Inventory', 'lock'),
-(3, 'CMS_EDI_For', '.php', '?Q=2', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
-(4, 'CMS_EDI_For', '.php', '?Q=3', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
-(5, 'CMS_Login', '.php', '', 0, 'EN', 0, 2, 'Login Page', 'lock'),
-(6, 'CMS_Login_catch' , '.php', '', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
-(7, 'CMS_Login_catch' , '.php', '?Q=3', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
-(8, 'CMS_Profile', '.php', '', 0, 'EN', 3, 2, 'Profile', 'lock'),
-(9, 'WMS_Staffing', '.php', '', 0, 'EN', 10, 10, 'WMS - Staffing', 'lock'),
-(10, 'CMS_Login_catch' , '.php', '?Q=2', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
-(11, 'CMS_Login_catch' , '.php', '?Q=1', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock');
+(1, 'cms_EDI_For', '.php', '?Q=1', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(2, 'wms_Inventory', '.php', '', 0, 'EN', 4, 5, 'WMS - Inventory', 'lock'),
+(3, 'cms_EDI_For', '.php', '?Q=2', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(4, 'cms_EDI_For', '.php', '?Q=3', 0, 'EN', 1, 2, 'CMS - Form creator', 'process'),
+(5, 'cms_Login', '.php', '', 0, 'EN', 0, 2, 'Login Page', 'lock'),
+(6, 'cms_Login_catch' , '.php', '', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
+(7, 'cms_Login_catch' , '.php', '?Q=3', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
+(8, 'cms_Profile', '.php', '', 0, 'EN', 3, 2, 'Profile', 'lock'),
+(9, 'wms_Staffing', '.php', '', 0, 'EN', 10, 10, 'WMS - Staffing', 'lock'),
+(10, 'cms_Login_catch' , '.php', '?Q=2', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock'),
+(11, 'cms_Login_catch' , '.php', '?Q=1', 0, 'EN', 0, 2, 'Login Page - Backend code', 'lock');
 
--- CMS_Page_content
-CREATE TABLE CMS_Page_content (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    Pages_id INT NOT NULL,
-    Page_types_id INT NOT NULL,
-    Content_id INT NOT NULL,
-    sort INT NOT NULL
+-- cms_Page_content
+CREATE TABLE cms_page_content (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	pages_id INT NOT NULL,
+	page_types_id INT NOT NULL,
+	content_id INT NOT NULL,
+	sort INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Page_content (id, Pages_id, Page_types_id, Content_id, sort) VALUES
+INSERT INTO cms_page_content (id, pages_id, page_types_id, content_id, sort) VALUES
 (0, 0, 0, 0, 0),
 (1, 1, 1, 1, 0),
 (2, 1, 1, 2, 1);
 
 /* Translating forms - The overaching anchor */
 
--- CMS_Forms
-CREATE TABLE CMS_Forms (
+-- cms_Forms
+CREATE TABLE cms_forms (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(200),
@@ -202,12 +201,12 @@ CREATE TABLE CMS_Forms (
     created_on DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Forms (id, name, description, location) VALUES
+INSERT INTO cms_forms (id, name, description, location) VALUES
 (0, 'Example', 'This is an example form.', './EN/Index.php'),
-(1, 'CMS_Form_form', 'Generate Form.', './EN/Index.php');
+(1, 'cms_Form_form', 'Generate Form.', './EN/Index.php');
 
--- CMS_Form_fields
-CREATE TABLE CMS_Form_fields (
+-- cms_Form_fields
+CREATE TABLE cms_form_fields (
     id INT AUTO_INCREMENT PRIMARY KEY,
     form_id INT NOT NULL,
     field_key VARCHAR(255) NOT NULL,
@@ -216,36 +215,35 @@ CREATE TABLE CMS_Form_fields (
     field_description VARCHAR(200),
     field_required BOOLEAN DEFAULT FALSE,
     sort_order INT DEFAULT 0,
-    FOREIGN KEY (form_id) REFERENCES CMS_Forms(id) ON DELETE CASCADE
+    FOREIGN KEY (form_id) REFERENCES cms_Forms(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Form_fields (id, form_id, field_key, field_type, field_anker, field_description, field_required, sort_order) VALUES
+INSERT INTO cms_form_fields (id, form_id, field_key, field_type, field_anker, field_description, field_required, sort_order) VALUES
 (0, 0, 'example_info1', 'email', 'I1', 'This one can be deleted, or kept as example.', true, 0),
 (1, 0, 'example_info2', 'button', 'I2', 'This one can be deleted, or kept as example.', true, 1),
-(2, 1, 'CMS_Forms_id', 'number', 'CMSF1', 'id of page', true, 0),
-(3, 1, 'CMS_Forms_name', 'text', 'CMSF2', 'Name of field', true, 1),
-(4, 1, 'CMS_Forms_type', 'text', 'CMSF3', 'Type of element', true, 2),
-(5, 1, 'CMS_Forms_handle', 'text', 'CMSF4', 'Unique ID', true, 3),
-(6, 1, 'CMS_Forms_description', 'textarea', 'CMSF5', 'description', true, 4),
-(7, 1, 'CMS_Forms_req', 'checkbox', 'CMSF6', 'Required or not', true, 5),
-(8, 1, 'CMS_Forms_sort', 'number', 'CMSF7', 'Sorting order', true, 6),
-(9, 1, 'CMS_Forms_Submit', 'button', 'CMSF8', 'submit button', true, 7);
+(2, 1, 'cms_Forms_id', 'number', 'CMSF1', 'id of page', true, 0),
+(3, 1, 'cms_Forms_name', 'text', 'CMSF2', 'Name of field', true, 1),
+(4, 1, 'cms_Forms_type', 'text', 'CMSF3', 'Type of element', true, 2),
+(5, 1, 'cms_Forms_handle', 'text', 'CMSF4', 'Unique ID', true, 3),
+(6, 1, 'cms_Forms_description', 'textarea', 'CMSF5', 'description', true, 4),
+(7, 1, 'cms_Forms_req', 'checkbox', 'CMSF6', 'Required or not', true, 5),
+(8, 1, 'cms_Forms_sort', 'number', 'CMSF7', 'Sorting order', true, 6),
+(9, 1, 'cms_Forms_Submit', 'button', 'CMSF8', 'submit button', true, 7);
 
--- CMS_Form_field_translation
-CREATE TABLE CMS_Form_field_translation (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    field_id INT NOT NULL,
-    lang_id INT NOT NULL,
-    lang_label VARCHAR(255) NOT NULL,
-    lang_placeholder VARCHAR(255),
-    lang_center VARCHAR(60),
-    FOREIGN KEY (field_id) REFERENCES CMS_Form_fields(id) ON DELETE CASCADE,
-    FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_field_lang (field_id, lang_id)
+-- cms_Form_field_translation
+CREATE TABLE cms_form_field_translation (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	field_id INT NOT NULL,
+	lang_id INT NOT NULL,
+	lang_label VARCHAR(255) NOT NULL,
+	lang_placeholder VARCHAR(255),
+	lang_center VARCHAR(60),
+	FOREIGN KEY (field_id) REFERENCES cms_form_fields(id) ON DELETE CASCADE,
+	FOREIGN KEY (lang_id) REFERENCES cms_lang(id) ON DELETE CASCADE,
+	UNIQUE KEY unique_field_lang (field_id, lang_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Form_field_translation (id, field_id, lang_id, lang_label, lang_placeholder, lang_center) VALUES
-(0, 0, 0, 'Email Example:', 'Something@something.com', ''),
+INSERT INTO cms_form_field_translation (id, field_id, lang_id, lang_label, lang_placeholder, lang_center) VALUES(0, 0, 0, 'Email Example:', 'Something@something.com', ''),
 (1, 1, 0, '', '', 'Click'),
 (2, 2, 0, 'Form', 'Unique form ID', ''),
 (3, 3, 0, 'Name the field', 'Must be unique', ''),
@@ -264,108 +262,108 @@ INSERT INTO CMS_Form_field_translation (id, field_id, lang_id, lang_label, lang_
 (17, 7, 1, 'Vereist', '', ''),
 (18, 8, 1, '', '', 'Verzend');
 
--- CMS_Translations_Other
-CREATE TABLE CMS_Translations_Other (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    lang_id INT NOT NULL,
-    handle_tag VARCHAR(100) NOT NULL,
-    page_id INT NOT NULL,
-    text VARCHAR(100) NOT NULL,
-    FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE,
-	FOREIGN KEY (page_id) REFERENCES CMS_Pages(id) ON DELETE CASCADE,
-    UNIQUE KEY unique_translate_lang (lang_id, page_id, handle_tag)
+-- cms_Translations_Other
+CREATE TABLE cms_translations_other (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	lang_id INT NOT NULL,
+	handle_tag VARCHAR(100) NOT NULL,
+	page_id INT NOT NULL,
+	text VARCHAR(100) NOT NULL,
+	FOREIGN KEY (lang_id) REFERENCES cms_lang(id) ON DELETE CASCADE,
+	FOREIGN KEY (page_id) REFERENCES cms_pages(id) ON DELETE CASCADE,
+	UNIQUE KEY unique_translate_lang (lang_id, page_id, handle_tag)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Translations_Other (id, lang_id, handle_tag, page_id, text) VALUES
-(0, 0, 'WMS_inv_sta_1', 2, 'Staff (volenteers)'),
-(1, 0, 'WMS_inv_sta_2', 2, 'Clients'),
-(2, 0, 'WMS_inv_sta_3', 2, 'Vegetarians'),
-(3, 0, 'WMS_inv_sta_1', 2, 'Stockpile (current)'),
-(4, 0, 'WMS_inv_sta_2', 2, 'Stockpile (previous)'),
-(5, 0, 'WMS_inv_sta_3', 2, 'Last shipment'),
-(6, 0, 'WMS_inv_sta_4', 2, 'shelf-life'),
-(7, 0, 'WMS_inv_sta_5', 2, 'Options'),
-(8, 0, 'WMS_inv_sta_6', 2, '📦 Transfer'),
-(9, 0, 'CMS_Log_USR', 5, 'Username'),
-(10, 0, 'CMS_Log_EMA', 5, 'Email'),
-(11, 0, 'CMS_Log_PSW', 5, 'Password'),
-(12, 0, 'CMS_Log_BT1', 5, 'Send'),
-(13, 0, 'CMS_Log_HL1', 5, 'Log in'),
-(14, 0, 'CMS_Log_HL2', 5, 'Create Account'),
-(15, 0, 'CMS_Log_STA', 5, 'Stay Logged In.'),
-(16, 0, 'CMS_Log_EXT', 5, 'Enter your details to continue.'),
-(17, 0, 'CMS_Log_0Nm', 6, 'Only letters A–Z allowed.'),
-(18, 0, 'CMS_Log_0Pw1', 6, 'Password must be 8–20 characters long.'),
-(19, 0, 'CMS_Log_0Pw2', 6, 'Password must include at least one lowercase letter.'),
-(20, 0, 'CMS_Log_0Pw3', 6, 'Password must include at least one uppercase letter.'),
-(21, 0, 'CMS_Log_0Pw4', 6, 'Password must include at least one digit.'),
-(22, 0, 'CMS_Log_0Pw5', 6, 'Password must include at least one special character'),
-(23, 0, 'CMS_Log_0Pw6', 6, 'Passwords do not match'),
-(24, 0, 'CMS_Log_0Pw7', 6, 'An empty field was detected'),
-(25, 0, 'CMS_Log_0Au', 6, 'This email account is already known.'),
-(26, 0, 'CMS_Log_0Ae', 6, 'A user with this name exists.'),
-(27, 0, 'CMS_Log_Erd', 6, 'An error has been detected.'),
-(28, 0, 'CMS_Log_Erb', 6, 'Return'),
-(29, 0, 'CMS_Log_LSu', 6, 'Active'),
-(30, 0, 'CMS_Log_Er1', 6, 'Credential combinations unknown.'),
-(31, 0, 'CMS_Log_Er2', 6, 'Account inactive.'),
-(32, 0, 'CMS_Pro_1eN', 8, 'First Name'),
-(33, 0, 'CMS_Pro_2eN', 8, 'Second Name'),
-(34, 0, 'CMS_Pro_CoN', 8, 'Company Name'),
-(35, 0, 'CMS_Pro_ENA', 8, 'Active'),
-(36, 0, 'CMS_Pro_CRE', 8, 'Joined at'),
-(37, 0, 'CMS_Pro_STR', 8, 'Street'),
-(38, 0, 'CMS_Pro_CIT', 8, 'City'),
-(39, 0, 'CMS_Pro_PHO', 8, 'Phone Number'),
-(40, 0, 'CMS_Pro_VEG', 8, 'Vegetarian'),
-(41, 0, 'CMS_Pro_DEF', 8, 'Location'),
-(42, 0, 'WMS_inv_sta_7', 2, 'Donors'),
-(43, 0, 'WMS_inv_sta_8', 2, 'First contact'),
-(44, 0, 'WMS_inv_sta_9', 2, 'Second contact'),
-(45, 0, 'WMS_inv_sta_10', 2, 'City'),
-(46, 0, 'WMS_inv_sta_11', 2, 'Street'),
-(47, 0, 'WMS_inv_sta_12', 2, 'Zip-code'),
-(48, 0, 'WMS_inv_sta_13', 2, 'Name');
+INSERT INTO cms_translations_other (id, lang_id, handle_tag, page_id, text) VALUES
+(0, 0, 'wms_inv_sta_1', 2, 'Staff (volenteers)'),
+(1, 0, 'wms_inv_sta_2', 2, 'Clients'),
+(2, 0, 'wms_inv_sta_3', 2, 'Vegetarians'),
+(3, 0, 'wms_inv_sto_1', 2, 'Stockpile (current)'),
+(4, 0, 'wms_inv_sto_2', 2, 'Stockpile (previous)'),
+(5, 0, 'wms_inv_sto_3', 2, 'Last shipment'),
+(6, 0, 'wms_inv_sto_4', 2, 'shelf-life'),
+(7, 0, 'wms_inv_sto_5', 2, 'Options'),
+(8, 0, 'wms_inv_sto_6', 2, '📦 Transfer'),
+(9, 0, 'cms_Log_USR', 5, 'Username'),
+(10, 0, 'cms_Log_EMA', 5, 'Email'),
+(11, 0, 'cms_Log_PSW', 5, 'Password'),
+(12, 0, 'cms_Log_BT1', 5, 'Send'),
+(13, 0, 'cms_Log_HL1', 5, 'Log in'),
+(14, 0, 'cms_Log_HL2', 5, 'Create Account'),
+(15, 0, 'cms_Log_STA', 5, 'Stay Logged In.'),
+(16, 0, 'cms_Log_EXT', 5, 'Enter your details to continue.'),
+(17, 0, 'cms_Log_0Nm', 6, 'Only letters A–Z allowed.'),
+(18, 0, 'cms_Log_0Pw1', 6, 'Password must be 8–20 characters long.'),
+(19, 0, 'cms_Log_0Pw2', 6, 'Password must include at least one lowercase letter.'),
+(20, 0, 'cms_Log_0Pw3', 6, 'Password must include at least one uppercase letter.'),
+(21, 0, 'cms_Log_0Pw4', 6, 'Password must include at least one digit.'),
+(22, 0, 'cms_Log_0Pw5', 6, 'Password must include at least one special character'),
+(23, 0, 'cms_Log_0Pw6', 6, 'Passwords do not match'),
+(24, 0, 'cms_Log_0Pw7', 6, 'An empty field was detected'),
+(25, 0, 'cms_Log_0Au', 6, 'This email account is already known.'),
+(26, 0, 'cms_Log_0Ae', 6, 'A user with this name exists.'),
+(27, 0, 'cms_Log_Erd', 6, 'An error has been detected.'),
+(28, 0, 'cms_Log_Erb', 6, 'Return'),
+(29, 0, 'cms_Log_LSu', 6, 'Active'),
+(30, 0, 'cms_Log_Er1', 6, 'Credential combinations unknown.'),
+(31, 0, 'cms_Log_Er2', 6, 'Account inactive.'),
+(32, 0, 'cms_Pro_1eN', 8, 'First Name'),
+(33, 0, 'cms_Pro_2eN', 8, 'Second Name'),
+(34, 0, 'cms_Pro_CoN', 8, 'Company Name'),
+(35, 0, 'cms_Pro_ENA', 8, 'Active'),
+(36, 0, 'cms_Pro_CRE', 8, 'Joined at'),
+(37, 0, 'cms_Pro_STR', 8, 'Street'),
+(38, 0, 'cms_Pro_CIT', 8, 'City'),
+(39, 0, 'cms_Pro_PHO', 8, 'Phone Number'),
+(40, 0, 'cms_Pro_VEG', 8, 'Vegetarian'),
+(41, 0, 'cms_Pro_DEF', 8, 'Location'),
+(42, 0, 'wms_inv_sta_7', 2, 'Donors'),
+(43, 0, 'wms_inv_sta_8', 2, 'First contact'),
+(44, 0, 'wms_inv_sta_9', 2, 'Second contact'),
+(45, 0, 'wms_inv_sta_10', 2, 'City'),
+(46, 0, 'wms_inv_sta_11', 2, 'Street'),
+(47, 0, 'wms_inv_sta_12', 2, 'Zip-code'),
+(48, 0, 'wms_inv_sta_13', 2, 'Name');
 
--- CMS_content_raw
-CREATE TABLE CMS_content_raw (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    content LONGTEXT NOT NULL,
-    description TEXT,
-    created_on DATETIME DEFAULT CURRENT_TIMESTAMP
+-- cms_content_raw
+CREATE TABLE cms_content_raw (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	content LONGTEXT NOT NULL,
+	description TEXT,
+	created_on DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_content_raw (id, content, description) VALUES
-(0, "<h2>Welcome to the beta-website of the food bank</h2><br>I would like to welcome you on our new food bank website.<br> We are a collective of foodbank's throughout the Netherlands.<br> Our primary goal is to make sure that no one goes hungry in our fine community.<br>It is safe to say that we declare war on hunger and we, the volenteers in comibation with the donors both big and small are in the trenches and are taking the fight to hunger itself.<br><br><h3>Need help</h3>The truth is that bad luck can befall anyone and that hunger is unpleasant for everyone. So we welcome everyone that goes hungry to <a href='CMS_Login.php'>make an account</a> and apply for the support today.<br>While we promise not to judge you, we do have to go through the application process, because we want to make sure that there is enough food for those that really need it.<br><h3>Want to help?</h3>Do you wish to help yourself?<br> Do you feel the calling yourself?<br> Either by volenteering in one of our fine locations or making financial or physical donation?<br> Either contact the location close to you, or follow the same process by <a href='CMS_Login.php'>making an account</a>.<br><br><img class='CMS_FR_IM' src='images\Generic_Foodbank_Image.jpeg' placeholder='Food for everyone'><br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> <i>Please note: This is a non-profit organization and does this out of good will and kinddness. We would therefor request that you do not hassle our volenteers.</i>", 'Example text'),
+INSERT INTO cms_content_raw (id, content, description) VALUES
+(0, "<h2>Welcome to the beta-website of the food bank</h2><br>I would like to welcome you on our new food bank website.<br> We are a collective of foodbank's throughout the Netherlands.<br> Our primary goal is to make sure that no one goes hungry in our fine community.<br>It is safe to say that we declare war on hunger and we, the volenteers in comibation with the donors both big and small are in the trenches and are taking the fight to hunger itself.<br><br><h3>Need help</h3>The truth is that bad luck can befall anyone and that hunger is unpleasant for everyone. So we welcome everyone that goes hungry to <a href='cms_Login.php'>make an account</a> and apply for the support today.<br>While we promise not to judge you, we do have to go through the application process, because we want to make sure that there is enough food for those that really need it.<br><h3>Want to help?</h3>Do you wish to help yourself?<br> Do you feel the calling yourself?<br> Either by volenteering in one of our fine locations or making financial or physical donation?<br> Either contact the location close to you, or follow the same process by <a href='cms_Login.php'>making an account</a>.<br><br><img class='cms_FR_IM' src='images\Generic_Foodbank_Image.jpeg' placeholder='Food for everyone'><br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> <i>Please note: This is a non-profit organization and does this out of good will and kinddness. We would therefor request that you do not hassle our volenteers.</i>", 'Example text'),
 (1, '&lt;h1&gt;CMS - Form generator&lt;/h2&gt;&lt;br&gt;Please use the form below to create new forms.', 'CMS - Form - Header'),
 (2, 'Welcome at the foodbank.\n This is our newest foodbank page.', 'Index welcome page');
 
--- CMS_Selectfield
-CREATE TABLE CMS_Selectfield (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    form_id INT,
-    descript VARCHAR(200) NOT NULL,
-    data_type ENUM('Data', 'Page') NOT NULL,
-    FOREIGN KEY (form_id) REFERENCES CMS_Forms(id) ON DELETE CASCADE
+-- cms_Selectfield
+CREATE TABLE cms_selectfield (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	form_id INT,
+	descript VARCHAR(200) NOT NULL,
+	data_type ENUM('Data', 'Page') NOT NULL,
+	FOREIGN KEY (form_id) REFERENCES cms_forms(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_Selectfield (id, form_id, descript, data_type) VALUES
+INSERT INTO cms_selectfield (id, form_id, descript, data_type) VALUES
 (0, 0, 'Example', 'Data');
 
--- CMS_SelectOption
-CREATE TABLE CMS_SelectOption (
+-- cms_SelectOption
+CREATE TABLE cms_selectOption (
     id INT AUTO_INCREMENT PRIMARY KEY,
     data_value VARCHAR(10) NOT NULL,
     data_text VARCHAR(255) NOT NULL,
     select_id VARCHAR(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO CMS_SelectOption (id, data_value, data_text, select_id) VALUES
+INSERT INTO cms_selectOption (id, data_value, data_text, select_id) VALUES
 (0, '1', 'Example 1', 'Na1'),
 (1, '1', 'Example 2', 'Na2');
 
--- CMS_menu_links
-CREATE TABLE CMS_menu_links (
+-- cms_menu_links
+CREATE TABLE cms_menu_links (
     id INT AUTO_INCREMENT PRIMARY KEY,
     lang_id INT NOT NULL,
     pages_id INT NOT NULL,
@@ -375,22 +373,22 @@ CREATE TABLE CMS_menu_links (
     sort INT NOT NULL,
     style VARCHAR(20),
     created_on DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE,
-    FOREIGN KEY (pages_id) REFERENCES CMS_Pages(id) ON DELETE CASCADE,
-    FOREIGN KEY (rights_id) REFERENCES Prof_Rights(id) ON DELETE CASCADE
+    FOREIGN KEY (lang_id) REFERENCES cms_lang(id) ON DELETE CASCADE,
+    FOREIGN KEY (pages_id) REFERENCES cms_pages(id) ON DELETE CASCADE,
+    FOREIGN KEY (rights_id) REFERENCES Prof_rights(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-INSERT INTO CMS_menu_links (id, lang_id, pages_id, rights_id, label, description, sort, style, created_on) VALUES
-(0, 0, 0, 0, 'Home', 'The starting page', 0, 'CMS_GM_Item', now()),
-(1, 0, 1, 1, 'CMS - Forms', 'This allows you to setup forms', 21, 'CMS_GM_Item', now()),
-(2, 0, 2, 4, 'WMS - Inventory', 'Inventory management', 10, 'CMS_GM_Item', now()),
-(3, 0, 3, 1, 'CMS - Form Translations', 'This allows you to setup translations for forms', 22, 'CMS_GM_Item', now()),
+INSERT INTO cms_menu_links (id, lang_id, pages_id, rights_id, label, description, sort, style, created_on) VALUES
+(0, 0, 0, 0, 'Home', 'The starting page', 0, 'cms_GM_Item', now()),
+(1, 0, 1, 1, 'CMS - Forms', 'This allows you to setup forms', 21, 'cms_GM_Item', now()),
+(2, 0, 2, 4, 'WMS - Inventory', 'Inventory management', 10, 'cms_GM_Item', now()),
+(3, 0, 3, 1, 'CMS - Form Translations', 'This allows you to setup translations for forms', 22, 'cms_GM_Item', now()),
 (4, 0, 4, 1, 'CMS - Pages', 'Form Items generator', 20, 'This allows you to setup dynamic page generation', now()),
-(5, 0, 5, 6, 'Login / New account', 'You can log in or create an account here', 1, 'CMS_GM_Item', now()),
-(6, 0, 7, 3, 'Logout', 'Logging off', 1, 'CMS_GM_Item', now()),
-(7, 0, 9, 10, 'WMS - Schedule', 'You can manage the schedule here', 11, 'CMS_GM_Item', now());
+(5, 0, 5, 6, 'Login / New account', 'You can log in or create an account here', 1, 'cms_GM_Item', now()),
+(6, 0, 7, 3, 'Logout', 'Logging off', 1, 'cms_GM_Item', now()),
+(7, 0, 9, 10, 'WMS - Schedule', 'You can manage the schedule here', 11, 'cms_GM_Item', now());
 
--- WMS_Locations
-CREATE TABLE WMS_Locations (
+-- wms_Locations
+CREATE TABLE wms_locations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     loc_name VARCHAR(100) NOT NULL,
     loc_zipcode VARCHAR(20) NOT NULL,
@@ -401,94 +399,94 @@ CREATE TABLE WMS_Locations (
     loc_enabled BOOLEAN DEFAULT FALSE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO WMS_Locations (id, loc_name, loc_zipcode, loc_city, loc_street, loc_1e_contact_id, loc_2e_contact_id, loc_enabled) VALUES
+INSERT INTO wms_Locations (id, loc_name, loc_zipcode, loc_city, loc_street, loc_1e_contact_id, loc_2e_contact_id, loc_enabled) VALUES
 (0, 'Headquarters', '1111 AA', 'Amsterdam', 'Hoofstraat 11', 0, NULL, true),
 (1, 'Breda - Centrum', '2222 BB', 'Breda', 'Brabant weg 1', 0, NULL, true),
 (2, 'Amsterdam - Noord', '1111 AB', 'Amsterdam', 'Arnhemse laan 4', 1, NULL, true);
 
--- WMS_Time_Measure
-CREATE TABLE WMS_Time_Measure (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    Time_type VARCHAR(100) NOT NULL
+-- wms_Time_Measure
+CREATE TABLE wms_time_measure (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	time_type VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO WMS_Time_Measure (id, Time_type) VALUES
+INSERT INTO wms_time_measure (id, time_type) VALUES
 (0, 'Hours'),
 (1, 'Days'),
 (2, 'Weeks'),
 (3, 'Months'),
 (4, 'Years');
 
--- WMS_Unit_type
-CREATE TABLE WMS_Unit_type (
+-- wms_Unit_type
+CREATE TABLE wms_unit_type (
     id INT AUTO_INCREMENT PRIMARY KEY,
     unit_type VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO WMS_Unit_type (id, unit_type) VALUES
+INSERT INTO wms_unit_type (id, unit_type) VALUES
 (0, 'Kilograms'),
 (1, 'Liters'),
 (2, 'Packs'),
 (3, 'Cartons');
 
--- WMS_Food_type
-CREATE TABLE WMS_Food_type (
+-- wms_Food_type
+CREATE TABLE wms_Food_type (
     id INT AUTO_INCREMENT PRIMARY KEY,
     food_type VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO WMS_Food_type (id, food_type) VALUES
+INSERT INTO wms_Food_type (id, food_type) VALUES
 (0, 'Grains'),
 (1, 'Fruits'),
 (2, 'Vegetables'),
 (3, 'Dairy'),
 (4, 'Meat');
 
--- WMS_Food_products
-CREATE TABLE WMS_Food_products (
+-- wms_Food_products
+CREATE TABLE wms_food_products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     u_type_id INT NOT NULL,
     f_type_id INT NOT NULL,
     shelflife INT,
     t_type_id INT,
-    FOREIGN KEY (u_type_id) REFERENCES WMS_Unit_type(id) ON DELETE CASCADE,
-    FOREIGN KEY (f_type_id) REFERENCES WMS_Food_type(id) ON DELETE CASCADE,
-    FOREIGN KEY (t_type_id) REFERENCES WMS_Time_Measure(id) ON DELETE CASCADE
+    FOREIGN KEY (u_type_id) REFERENCES wms_unit_type(id) ON DELETE CASCADE,
+    FOREIGN KEY (f_type_id) REFERENCES wms_food_type(id) ON DELETE CASCADE,
+    FOREIGN KEY (t_type_id) REFERENCES wms_time_Measure(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO WMS_Food_products (id, u_type_id, f_type_id, shelflife, t_type_id) VALUES
+INSERT INTO wms_food_products (id, u_type_id, f_type_id, shelflife, t_type_id) VALUES
 (0, 1, 2, 5, 2),
 (1, 2, 0, 1, 2),
 (2, 2, 3, 1, 2);
 
--- WMS_Food_translations
-CREATE TABLE WMS_Food_translations (
+-- wms_Food_translations
+CREATE TABLE wms_food_translations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     f_product_id INT NOT NULL,
     lang_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (f_product_id) REFERENCES WMS_Food_products(id) ON DELETE CASCADE,
-    FOREIGN KEY (lang_id) REFERENCES CMS_Lang(id) ON DELETE CASCADE
+    FOREIGN KEY (f_product_id) REFERENCES wms_food_products(id) ON DELETE CASCADE,
+    FOREIGN KEY (lang_id) REFERENCES cms_lang(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO WMS_Food_translations (id, f_product_id, lang_id, name) VALUES
+INSERT INTO wms_food_translations (id, f_product_id, lang_id, name) VALUES
 (0, 0, 0, 'Apple'),
 (1, 1, 0, 'Cereal'),
 (2, 2, 0, 'Yogurt');
 
--- WMS_Don_CMR
-CREATE TABLE WMS_Don_CMR (
+-- wms_Don_cmr
+CREATE TABLE wms_don_cmr (
     id INT AUTO_INCREMENT PRIMARY KEY,
     donor_id INT,
     loc_id INT NOT NULL,
     processed BOOLEAN DEFAULT FALSE,
     pledge_d DATETIME NOT NULL,
     expected_d DATETIME,
-    FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE
+    FOREIGN KEY (loc_id) REFERENCES wms_locations(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- WMS_Donations
-CREATE TABLE WMS_Donations (
+-- wms_Donations
+CREATE TABLE wms_fonations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ingredient_id INT NOT NULL,
     loc_id INT NOT NULL,
@@ -498,14 +496,14 @@ CREATE TABLE WMS_Donations (
     pledge_d DATETIME NOT NULL,
     expected_d DATETIME,
     delivery BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (ingredient_id) REFERENCES WMS_Food_products(id) ON DELETE CASCADE,
-    FOREIGN KEY (donor_id) REFERENCES Prof_profiles(id) ON DELETE CASCADE,
-    FOREIGN KEY (donor_cmr_id) REFERENCES WMS_Don_CMR(id) ON DELETE CASCADE,
-    FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE
+    FOREIGN KEY (ingredient_id) REFERENCES wms_food_products(id) ON DELETE CASCADE,
+    FOREIGN KEY (donor_id) REFERENCES prof_profiles(id) ON DELETE CASCADE,
+    FOREIGN KEY (donor_cmr_id) REFERENCES wms_don_cmr(id) ON DELETE CASCADE,
+    FOREIGN KEY (loc_id) REFERENCES wms_Locations(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- WMS_Transfer
-CREATE TABLE WMS_Transfer (
+-- wms_Transfer
+CREATE TABLE wms_transfer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ingredient_id INT NOT NULL,
     loc_sending_id INT NOT NULL,
@@ -513,61 +511,61 @@ CREATE TABLE WMS_Transfer (
     volume INT NOT NULL,
     delivery BOOLEAN DEFAULT FALSE,
     dilivery_date DATETIME NOT NULL,
-    FOREIGN KEY (ingredient_id) REFERENCES WMS_Food_products(id) ON DELETE CASCADE,
-    FOREIGN KEY (loc_sending_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE,
-    FOREIGN KEY (loc_recieving_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE
+    FOREIGN KEY (ingredient_id) REFERENCES wms_food_products(id) ON DELETE CASCADE,
+    FOREIGN KEY (loc_sending_id) REFERENCES wms_locations(id) ON DELETE CASCADE,
+    FOREIGN KEY (loc_recieving_id) REFERENCES wms_locations(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO WMS_Transfer (id, ingredient_id, loc_sending_id, loc_recieving_id, volume, delivery, dilivery_date) VALUES
+INSERT INTO wms_transfer (id, ingredient_id, loc_sending_id, loc_recieving_id, volume, delivery, dilivery_date) VALUES
 (0, 1, 0, 1, 22, true, '2025-12-27 10:36:00');
 
--- WMS_Process
-CREATE TABLE WMS_Process (
+-- wms_Process
+CREATE TABLE wms_process (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ingredient_id INT NOT NULL,
     loc_id INT NOT NULL,
     volume INT NOT NULL,
     process_date DATETIME NOT NULL,
-    FOREIGN KEY (ingredient_id) REFERENCES WMS_Food_products(id) ON DELETE CASCADE,
-    FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE
+    FOREIGN KEY (ingredient_id) REFERENCES wms_food_products(id) ON DELETE CASCADE,
+    FOREIGN KEY (loc_id) REFERENCES wms_locations(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO WMS_Process (id, ingredient_id, loc_id, volume, process_date) VALUES
+INSERT INTO wms_process (id, ingredient_id, loc_id, volume, process_date) VALUES
 (0, 1, 1, 7, NOW());
 
--- WMS_Stock
-CREATE TABLE WMS_Stock (
+-- wms_Stock
+CREATE TABLE wms_stock (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ingredient_id INT NOT NULL,
     loc_id INT NOT NULL,
     stockpile_new INT NOT NULL,
     stockpile_pre INT NOT NULL,
     last_update DATETIME NOT NULL,
-    FOREIGN KEY (ingredient_id) REFERENCES WMS_Food_products(id) ON DELETE CASCADE,
-    FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE
+    FOREIGN KEY (ingredient_id) REFERENCES wms_food_products(id) ON DELETE CASCADE,
+    FOREIGN KEY (loc_id) REFERENCES l(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE WMS_Weeks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    week INT NOT NULL,
-    year INT NOT NULL,
-    start_date DATE,
-    end_date DATE,
-    UNIQUE (week, year)
+CREATE TABLE wms_weeks (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	week INT NOT NULL,
+	year INT NOT NULL,
+	start_date DATE,
+	end_date DATE,
+	UNIQUE KEY weeks (week, year)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE WMS_Roles (
+CREATE TABLE wms_roles (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	discription VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-INSERT INTO WMS_Roles (id, name, discription) VALUES 
+INSERT INTO wms_roles (id, name, discription) VALUES 
 (0, 'Driver', 'Driving to and from food distribution points'),
 (1, 'Sorting and Quality', 'Helping to check the quality of ingredients and help package them'),
 (2, 'Food Distribution', 'Help to give out food parcels to families in need'),
 (3, 'Coordinator', 'Various coordinative and administrative functions');
 
-CREATE TABLE WMS_Roster (
+CREATE TABLE wms_roster (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	role_id INT NOT NULL,
 	weeks_id INT NOT NULL,
@@ -580,13 +578,13 @@ CREATE TABLE WMS_Roster (
 	day_fri BOOLEAN DEFAULT FALSE,
 	day_sat BOOLEAN DEFAULT FALSE,
 	day_sun BOOLEAN DEFAULT FALSE,
-	FOREIGN KEY (role_id) REFERENCES WMS_Roles(id) ON DELETE CASCADE,
-	FOREIGN KEY (prof_id) REFERENCES Prof_users(id) ON DELETE CASCADE,
-	FOREIGN KEY (loc_id) REFERENCES WMS_Locations(id) ON DELETE CASCADE,
-	UNIQUE KEY WMS_Roster_constraint (weeks_id, role_id, prof_id)
+	FOREIGN KEY (role_id) REFERENCES wms_roles(id) ON DELETE CASCADE,
+	FOREIGN KEY (prof_id) REFERENCES prof_users(id) ON DELETE CASCADE,
+	FOREIGN KEY (loc_id) REFERENCES wms_locations(id) ON DELETE CASCADE,
+	UNIQUE KEY wms_roster_constraint (weeks_id, role_id, prof_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-ALTER TABLE Prof_profiles ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES Prof_Users(id) ON DELETE CASCADE;
+ALTER TABLE prof_profiles ADD CONSTRAINT fk_users_id FOREIGN KEY (users_id) REFERENCES prof_Users(id) ON DELETE CASCADE;
 
 -- Herstel SQL-mode
 SET @@SESSION.sql_mode = @old_sql_mode;

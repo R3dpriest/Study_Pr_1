@@ -7,7 +7,7 @@ $SQL_Server = "localhost";
 $SQL_Username = "root";
 $SQL_Password = "";
 //$SQL_Password = "i572944";
-$SQL_DB1 = "NGO_Foodbank";
+$SQL_DB1 = "ngo_foodbank";
 $SQL_File1 = 'Create_database.sql';
 $SQL_Commands1 = file_get_contents($SQL_File1);
 
